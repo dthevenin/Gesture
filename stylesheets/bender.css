@@ -1,0 +1,105 @@
+html {
+  min-height: 100%;
+}
+
+footer {
+  text-align: center;
+  font-size: small;
+  margin: 4em 0;
+}
+
+footer a {
+  color: #444;
+}
+
+div.tiles,
+#downloads {
+  width: 960px;
+  margin: 10px auto;
+  padding: 0;
+  height: 100%;
+  font-size: 0;
+}
+
+@media (min-width: 720px) and (max-width: 960px) {
+  div.tiles,
+  #downloads  {
+    width: 720px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 720px) {
+  div.tiles  {
+    width: 480px;
+  }
+}
+
+@media (max-width: 480px) {
+  div.tiles  {
+    width: 320px;
+  }
+}
+
+div.tiles > div {
+  font-size: 16px;
+  border-radius: 5px;
+  width: 220px;
+  height: 220px;
+  margin: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: bottom;
+  box-shadow: 0 0 10px #444;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+li {
+  margin-top: 0.5em;
+}
+
+h1, h2, h3 {
+  font-weight: normal;
+  margin: 0;
+}
+
+strong {
+  font-size: 200%;
+  font-weight: normal;
+}
+
+a {
+  text-decoration: none;
+}
+
+.tiles .text {
+  text-align: center;
+  position: relative;
+  padding-top: 5px;
+}
+
+.tiles .text span {
+  font-weight: bold;
+}
+
+.tiles .text div {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-pack: center;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-pack: center;
+  height: 100%;
+}
+
+.tiles .text p {
+  margin: 0;
+  position: absolute;
+  bottom: 5px;
+  padding: 5px;
+}
