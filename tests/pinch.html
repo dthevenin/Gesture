@@ -18,7 +18,7 @@
         transform-origin: 0 0;
       }
       #node1 {
-        background-color: red;
+        background-color: brown;
       }
       #node2 {
         background-color: green;
@@ -40,6 +40,10 @@
         text-align: center;
         font-size: 3;
       }
+    * {
+     -ms-touch-action: none;
+    }
+
     </style>
 
     <script type="text/javascript" src="../build/firminCSSMatrix.js"></script>
@@ -61,9 +65,10 @@
         node.gestureStart = gestureStart;
         node.gestureChange = gestureChange;
         node.gestureEnd = gestureEnd;
+        vs.addPointerListener (node, vs.POINTER_START, node);
         vs.addPointerListener (node, vs.GESTURE_START, node);
         
-        document.addEventListener (vs.POINTER_START, function (e) {e.preventDefault (); });
+//        document.addEventListener (vs.POINTER_START, function (e) {e.preventDefault (); });
       }
     </script>
   </head>
