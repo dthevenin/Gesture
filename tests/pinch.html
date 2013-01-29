@@ -18,7 +18,7 @@
         transform-origin: 0 0;
       }
       #node1 {
-        background-color: blue;
+        background-color: red;
       }
       #node2 {
         background-color: green;
@@ -42,13 +42,14 @@
       }
     </style>
 
-    <script type="text/javascript" src="../build/firminCSSMatrix_min.js"></script>
+    <script type="text/javascript" src="../build/firminCSSMatrix.js"></script>
     <script type="text/javascript" src="../build/vs_util.js"></script>
     <script type="text/javascript" src="../build/vs_transform.js"></script>
     <script type="text/javascript" src="../build/vs_gesture.js"></script>
     <script type="text/javascript" src="debug.js"></script>
     <script type="text/javascript" src="pointerListeners.js"></script>
-    
+    <script type="text/javascript" src="gestureListeners.js"></script>
+
     <script>
       function test ()
       {
@@ -57,10 +58,14 @@
         node.pointerStart = pointerStart;
         node.pointerMove = pointerMove;
         node.pointerEnd = pointerEnd;
-        vs.addPointerListener (node, vs.POINTER_START, node);
+        node.gestureStart = gestureStart;
+        node.gestureChange = gestureChange;
+        node.gestureEnd = gestureEnd;
+        vs.addPointerListener (node, vs.GESTURE_START, node);
+        
+        document.addEventListener (vs.POINTER_START, function (e) {e.preventDefault (); });
       }
     </script>
-
   </head>
   <body class="theme application" x-hag-hole="children" onload="test ()">
     <div id="node1"></div>
