@@ -309,7 +309,7 @@ function msPointerCancelHandler (event, listener)
 
 var pointerStartHandler, pointerMoveHandler, pointerEndHandle, pointerCancelHandler;
 
-if (util.EVENT_SUPPORT_TOUCH)
+if (EVENT_SUPPORT_TOUCH)
 {
   if (hasMSPointer)
   {
