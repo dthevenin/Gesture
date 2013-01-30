@@ -89,9 +89,6 @@ build/vs_gesture.js: src/PointerEvent.js src/GestureEvent.js
 ###                    libs
 ##############################################################
 
-###                    libs
-##############################################################
-
 extern_libs: build/vs_util.js
 	
 build/vs_util.js:
