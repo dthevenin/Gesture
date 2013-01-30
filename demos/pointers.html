@@ -24,7 +24,7 @@ https://github.com/dthevenin/Gesture.
         -webkit-tap-highlight-color: rgba(0,0,0,0); 
         -ms-touch-action: none;
         touch-action: none;
-    }
+      }
 
       body {
         background-color: #000000;
@@ -41,9 +41,8 @@ https://github.com/dthevenin/Gesture.
         background-color:#ff0000;
       }
     </style>
-
-
   </head>
+
   <body onload = "init()">
     <script src="../build/firminCSSMatrix_min.js"></script>
     <script src="../build/vs_util_min.js"></script>
@@ -51,91 +50,89 @@ https://github.com/dthevenin/Gesture.
     <script src="../build/vs_gesture_min.js"></script>
     <script>
 
-var touches, canvas, ctx; // ctx is the canvas' context 2D
+    var touches, canvas, ctx; // ctx is the canvas' context 2D
 
-setupCanvas ();
+    setupCanvas ();
 
-vs.addPointerListener (canvas, vs.POINTER_START, onPointerDown, false );
-window.onorientationchange = resetCanvas;
-window.onresize = resetCanvas;
+    vs.addPointerListener (canvas, vs.POINTER_START, onPointerDown, false );
+    window.onorientationchange = resetCanvas;
+    window.onresize = resetCanvas;
 
-function resetCanvas (e) {
-  // resize the canvas - but remember - this clears the canvas too.
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+    function resetCanvas (e) {
+      // resize the canvas - but remember - this clears the canvas too.
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
 
-  //make sure we scroll to the top left.
-  window.scrollTo(0,0); 
-}
+      //make sure we scroll to the top left.
+      window.scrollTo(0,0); 
+    }
 
-function init(){
-  touches = [];
-  vs.requestAnimationFrame (draw);
-}
+    function init(){
+      touches = [];
+      vs.requestAnimationFrame (draw);
+    }
 
-function draw() {
-  ctx.clearRect(0,0,canvas.width, canvas.height); 
+    function draw() {
+      ctx.clearRect(0,0,canvas.width, canvas.height); 
 
-  for(var i=0; i<touches.length; i++)
-  {
-    var touch = touches[i]; 
-    ctx.beginPath(); 
-    ctx.fillStyle = "white";
-    ctx.fillText(touch.type+ " id : "+touch.identifier+" x:"+touch.clientX+" y:"+touch.clientY, touch.clientX+30, touch.clientY-30); 
+      for(var i=0; i<touches.length; i++)
+      {
+        var touch = touches[i]; 
+        ctx.beginPath(); 
+        ctx.fillStyle = "white";
+        ctx.fillText(touch.type+ " id : "+touch.identifier+" x:"+touch.clientX+" y:"+touch.clientY, touch.clientX+30, touch.clientY-30); 
 
-    ctx.beginPath(); 
-    ctx.strokeStyle = "cyan";
-    ctx.lineWidth = "6";
-    ctx.arc(touch.clientX, touch.clientY, 40, 0, Math.PI*2, true); 
-    ctx.stroke();
-  }
+        ctx.beginPath(); 
+        ctx.strokeStyle = "cyan";
+        ctx.lineWidth = "6";
+        ctx.arc(touch.clientX, touch.clientY, 40, 0, Math.PI*2, true); 
+        ctx.stroke();
+      }
 
-  vs.requestAnimationFrame (draw);
-}
+      vs.requestAnimationFrame (draw);
+    }
 
-var _move_listening = false;
+    var _move_listening = false;
 
-function onPointerDown(e) {
-  e.preventDefault();
-  touches = e.pointerList;
-  if (_move_listening) return;
-  vs.addPointerListener (canvas, vs.POINTER_MOVE, onPointerMove, false );
-  vs.addPointerListener (canvas, vs.POINTER_END, onPointerUp, false );
-  _move_listening = true;
-}
+    function onPointerDown(e) {
+      e.preventDefault();
+      touches = e.pointerList;
+      if (_move_listening) return;
+      vs.addPointerListener (canvas, vs.POINTER_MOVE, onPointerMove, false );
+      vs.addPointerListener (canvas, vs.POINTER_END, onPointerUp, false );
+      _move_listening = true;
+    }
 
-function onPointerMove(e) {
-  // Prevent the browser from doing its default thing (scroll, zoom)
-  touches = e.pointerList; 
-} 
+    function onPointerMove(e) {
+      // Prevent the browser from doing its default thing (scroll, zoom)
+      touches = e.pointerList; 
+    } 
 
-function onPointerUp(e) { 
-  touches = e.pointerList;
-  if (e.nbPointers === 0)
-  {
-    vs.removePointerListener (canvas, vs.POINTER_MOVE, onPointerMove, false );
-    vs.removePointerListener (canvas, vs.POINTER_END, onPointerUp, false );
-    _move_listening = false;
-  }
-}
+    function onPointerUp(e) { 
+      touches = e.pointerList;
+      if (e.nbPointers === 0)
+      {
+        vs.removePointerListener (canvas, vs.POINTER_MOVE, onPointerMove, false );
+        vs.removePointerListener (canvas, vs.POINTER_END, onPointerUp, false );
+        _move_listening = false;
+      }
+    }
 
-function setupCanvas() {
+    function setupCanvas() {
 
-  canvas = document.createElement( 'canvas' );
-  ctx = canvas.getContext( '2d' );
-  var container = document.createElement( 'div' );
-  container.className = "container";
+      canvas = document.createElement( 'canvas' );
+      ctx = canvas.getContext( '2d' );
+      var container = document.createElement( 'div' );
+      container.className = "container";
 
-  canvas.width = window.innerWidth; 
-  canvas.height = window.innerHeight; 
-  document.body.appendChild( container );
-  container.appendChild(canvas);	
+      canvas.width = window.innerWidth; 
+      canvas.height = window.innerHeight; 
+      document.body.appendChild( container );
+      container.appendChild(canvas);  
 
-  ctx.strokeStyle = "#ffffff";
-  ctx.lineWidth =2;	
-}
-
-
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth =2; 
+    }
     </script>
   </body>
 </html>

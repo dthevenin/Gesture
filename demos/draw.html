@@ -9,39 +9,39 @@ Modified to use Gesture.js by David Thevenin. For more information, see
 https://github.com/dthevenin/Gesture.
 -->
 <html lang=en>
-<head>
-  <meta name="viewport" content="width=device-width">
-</head>
+  <head>
+    <meta name="viewport" content="width=device-width">
+  </head>
 
-<style>
-  .container {
-    border: 1px solid black;
-    width: 900px;
-    -ms-touch-action: none;
-  }
+  <style>
+    .container {
+      border: 1px solid black;
+      width: 900px;
+      -ms-touch-action: none;
+    }
 
-  #canvas {
-    background: green;
-    margin: 0 auto;
-    overflow: hidden;
-    color: white;
-  }
+    #canvas {
+      background: green;
+      margin: 0 auto;
+      overflow: hidden;
+      color: white;
+    }
 
-  body {
-    overflow: hidden;
-  }
-</style>
+    body {
+      overflow: hidden;
+    }
+  </style>
 
-<body onload="init()">
-<div class="container">
-<canvas id="example" height="450" width="900"></canvas>
-</div>
+  <body onload="init()">
+    <div class="container">
+    <canvas id="example" height="450" width="900"></canvas>
+    </div>
 
-<!-- Pointer events library. -->
-<script src="../build/firminCSSMatrix_min.js"></script>
-<script src="../build/vs_util_min.js"></script>
-<script src="../build/vs_transform_min.js"></script>
-<script src="../build/vs_gesture_min.js"></script>
-<script src="js/painter.js"></script>
+    <!-- Pointer events library. -->
+    <script src="../build/firminCSSMatrix_min.js"></script>
+    <script src="../build/vs_util_min.js"></script>
+    <script src="../build/vs_transform_min.js"></script>
+    <script src="../build/vs_gesture_min.js"></script>
+    <script src="js/painter.js"></script>
   </body>
 </html>

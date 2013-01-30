@@ -29,7 +29,7 @@ https://github.com/dthevenin/Gesture.
       body {
         background-color: #000000;
         margin: 0px;
-      }
+       }
       canvas {
         display:block; 
         position:absolute; 
@@ -40,10 +40,8 @@ https://github.com/dthevenin/Gesture.
         background-color:#ff0000;
       }
     </style>
-
-
   </head>
-  <body onload = "init()">
+  <body>
     <script src="js/Vector2.js"></script>
     <script src="../build/firminCSSMatrix_min.js"></script>
     <script src="../build/vs_util_min.js"></script>
@@ -53,223 +51,204 @@ https://github.com/dthevenin/Gesture.
     <script src="js/ShipMovingTouch.js"></script>
     <script src="js/BulletSebs.js"></script>
     <script>
-var canvas,
-ctx, // ctx is the canvas' context 2D
-container, 
-halfWidth, 
-halfHeight,
-leftPointerID = -1, 
-leftPointerPos = new Vector2(0,0),
-leftPointerStartPos = new Vector2(0,0),
-leftVector = new Vector2(0,0); 
+      var canvas,
+      ctx, // ctx is the canvas' context 2D
+      container, 
+      halfWidth, 
+      halfHeight,
+      leftPointerID = -1, 
+      leftPointerPos = new Vector2(0,0),
+      leftPointerStartPos = new Vector2(0,0),
+      leftVector = new Vector2(0,0); 
 
+      setupCanvas ();
 
-setupCanvas();
+      var	pointers = [], // array of touch vectors
+      ship = new ShipMoving (halfWidth, halfHeight)
+      bullets = [],
+      spareBullets = [];
 
-var	pointers = [], // array of touch vectors
-ship = new ShipMoving(halfWidth, halfHeight)
-bullets = [],
-spareBullets = [];
+      document.body.appendChild (ship.canvas);
 
+      //setInterval(draw, 1000/35); 
+      vs.requestAnimationFrame (draw);
 
-document.body.appendChild (ship.canvas);
+      vs.addPointerListener (canvas, vs.POINTER_START, onPointerDown, false);
+      window.onorientationchange = resetCanvas;  
+      window.onresize = resetCanvas;  
 
-//setInterval(draw, 1000/35); 
-vs.requestAnimationFrame (draw);
+      function resetCanvas (e) {  
+        // resize the canvas - but remember - this clears the canvas too. 
+        canvas.width = window.innerWidth; 
+        canvas.height = window.innerHeight;
 
-vs.addPointerListener (canvas, vs.POINTER_START, onPointerDown, false );
-window.onorientationchange = resetCanvas;  
-window.onresize = resetCanvas;  
+        halfWidth = canvas.width/2; 
+        halfHeight = canvas.height/2;
 
-function resetCanvas (e) {  
-  // resize the canvas - but remember - this clears the canvas too. 
-  canvas.width = window.innerWidth; 
-  canvas.height = window.innerHeight;
+        //make sure we scroll to the top left. 
+        window.scrollTo (0,0); 
+      }
 
-  halfWidth = canvas.width/2; 
-  halfHeight = canvas.height/2;
+      function draw () {
 
-  //make sure we scroll to the top left. 
-  window.scrollTo(0,0); 
-}
+        ctx.clearRect (0,0,canvas.width, canvas.height); 
 
-function init(){
+        ship.targetVel.copyFrom (leftVector);
+        ship.targetVel.multiplyEq (0.15);
 
-}
+        ship.update(); 
 
-function draw() {
+        with(ship.pos) {
+          if (x < 0) x = canvas.width; 
+          else if (x > canvas.width) x = 0;
+          if (y < 0) y = canvas.height; 
+          else if (y > canvas.height) y = 0; 
+        }
 
-  ctx.clearRect(0,0,canvas.width, canvas.height); 
+        ship.draw(); 
 
-  ship.targetVel.copyFrom(leftVector);
-  ship.targetVel.multiplyEq(0.15);
+        for (var i = 0; i < bullets.length; i++) {
+          var bullet = bullets [i]; 
+          if (!bullet.enabled) continue; 
+          bullet.update (); 
+          bullet.draw (ctx); 
+          if (!bullet.enabled)
+          {
+            spareBullets.push (bullet); 
+          }
+        }
 
-  ship.update(); 
+        for (var i = 0; i < pointers.length; i++) {
 
-  with(ship.pos) {
-    if(x<0) x = canvas.width; 
-    else if(x>canvas.width) x = 0;
-    if(y<0) y = canvas.height; 
-    else if (y>canvas.height) y = 0; 
-  }
+          var pointer = pointers [i]; 
 
-  ship.draw(); 
+          if (pointer.identifier === leftPointerID) {
+            ctx.beginPath (); 
+            ctx.strokeStyle = "cyan"; 
+            ctx.lineWidth = 6; 
+            ctx.arc (leftPointerStartPos.x, leftPointerStartPos.y, 40,0,Math.PI*2,true); 
+            ctx.stroke ();
+            ctx.beginPath (); 
+            ctx.strokeStyle = "cyan"; 
+            ctx.lineWidth = 2; 
+            ctx.arc (leftPointerStartPos.x, leftPointerStartPos.y, 60,0,Math.PI*2,true); 
+            ctx.stroke ();
+            ctx.beginPath (); 
+            ctx.strokeStyle = "cyan"; 
+            ctx.arc (leftPointerPos.x, leftPointerPos.y, 40, 0,Math.PI*2, true); 
+            ctx.stroke (); 
 
+          } else {
 
-  for (var i = 0; i < bullets.length; i++) {
-    var bullet = bullets[i]; 
-    if(!bullet.enabled) continue; 
-    bullet.update(); 
-    bullet.draw(ctx); 
-    if(!bullet.enabled)
-    {
-      spareBullets.push(bullet); 
+            ctx.beginPath (); 
+            ctx.fillStyle = "white";
+            ctx.fillText (pointer.type + " id : "+pointer.identifier+" x:"+pointer.pageX+" y:"+pointer.pageY, pointer.pageX+30, pointer.pageY-30); 
 
-    }
+            ctx.beginPath (); 
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = "6";
+            ctx.arc (pointer.pageX, pointer.pageY, 40, 0, Math.PI*2, true); 
+            ctx.stroke ();
+          }
+        }
 
+        vs.requestAnimationFrame (draw);
+      }
 
-  }
+      function makeBullet () {
 
-  for(var i=0; i<pointers.length; i++) {
+        var bullet;
 
-    var pointer = pointers[i]; 
+        if (spareBullets.length > 0) {
 
-    if(pointer.identifier == leftPointerID){
-      ctx.beginPath(); 
-      ctx.strokeStyle = "cyan"; 
-      ctx.lineWidth = 6; 
-      ctx.arc(leftPointerStartPos.x, leftPointerStartPos.y, 40,0,Math.PI*2,true); 
-      ctx.stroke();
-      ctx.beginPath(); 
-      ctx.strokeStyle = "cyan"; 
-      ctx.lineWidth = 2; 
-      ctx.arc(leftPointerStartPos.x, leftPointerStartPos.y, 60,0,Math.PI*2,true); 
-      ctx.stroke();
-      ctx.beginPath(); 
-      ctx.strokeStyle = "cyan"; 
-      ctx.arc(leftPointerPos.x, leftPointerPos.y, 40, 0,Math.PI*2, true); 
-      ctx.stroke(); 
+          bullet = spareBullets.pop (); 
+          bullet.reset (ship.pos.x, ship.pos.y, ship.angle); 
 
-      } else {
+          } else {
 
-      ctx.beginPath(); 
-      ctx.fillStyle = "white";
-      ctx.fillText(pointer.type + " id : "+pointer.identifier+" x:"+pointer.pageX+" y:"+pointer.pageY, pointer.pageX+30, pointer.pageY-30); 
+          bullet = new Bullet (ship.pos.x, ship.pos.y, ship.angle); 
+          bullets.push (bullet);
+        }
+        bullet.vel.plusEq (ship.vel); 
+      }
 
-      ctx.beginPath(); 
-      ctx.strokeStyle = "red";
-      ctx.lineWidth = "6";
-      ctx.arc(pointer.pageX, pointer.pageY, 40, 0, Math.PI*2, true); 
-      ctx.stroke();
-    }
-  }
+      var _move_listening = false;
 
-  vs.requestAnimationFrame (draw);
-}
+      function onPointerDown (e) {
+        e.preventDefault ();
+        pointers = e.pointerList;
 
-function makeBullet() {
-
-  var bullet;
-
-  if(spareBullets.length>0) {
-
-    bullet = spareBullets.pop(); 
-    bullet.reset(ship.pos.x, ship.pos.y, ship.angle); 
-
-    } else {
-
-    bullet = new Bullet(ship.pos.x, ship.pos.y, ship.angle); 
-    bullets.push(bullet);
-
-  }
-
-  bullet.vel.plusEq(ship.vel); 
-
-
-}
-
-var _move_listening = false;
-
-function onPointerDown(e) {
-  e.preventDefault();
-  pointers = e.pointerList;
-
-  if (!_move_listening)
-  {
-    vs.addPointerListener (canvas, vs.POINTER_MOVE, onPointerMove, false );
-    vs.addPointerListener (canvas, vs.POINTER_END, onPointerUp, false );
-    _move_listening = true;
-  }
+        if (!_move_listening)
+        {
+          vs.addPointerListener (canvas, vs.POINTER_MOVE, onPointerMove, false);
+          vs.addPointerListener (canvas, vs.POINTER_END, onPointerUp, false);
+          _move_listening = true;
+        }
   
-  for(var i = 0; i<e.nbPointers; i++){
-    var pointer =pointers[i]; 
-    if((leftPointerID<0) && (pointer.pageX<halfWidth))
-    {
-      leftPointerID = pointer.identifier; 
-      leftPointerStartPos.reset(pointer.pageX, pointer.pageY); 	
-      leftPointerPos.copyFrom(leftPointerStartPos); 
-      leftVector.reset(0,0); 
-      continue; 		
-      } else {
+        for (var i = 0; i < e.nbPointers; i++) {
+          var pointer = pointers [i]; 
+          if ((leftPointerID < 0) && (pointer.pageX < halfWidth))
+          {
+            leftPointerID = pointer.identifier; 
+            leftPointerStartPos.reset (pointer.pageX, pointer.pageY); 	
+            leftPointerPos.copyFrom (leftPointerStartPos); 
+            leftVector.reset (0,0); 
+            continue; 		
+          } else {
+            makeBullet(); 
+          }	
+        }
+      }
 
-      makeBullet(); 
+      function onPointerMove (e) {
+        // Prevent the browser from doing its default thing (scroll, zoom)
+        pointers = e.pointerList;
 
-    }	
-  }
-}
+        for (var i = 0; i < e.nbPointers; i++){
+          var pointer = pointers[i]; 
+          if (leftPointerID === pointer.identifier)
+          {
+            leftPointerPos.reset (pointer.pageX, pointer.pageY); 
+            leftVector.copyFrom (leftPointerPos); 
+            leftVector.minusEq (leftPointerStartPos); 	
+            break; 		
+          }		
+        }
+      } 
 
-function onPointerMove(e) {
-  // Prevent the browser from doing its default thing (scroll, zoom)
-  pointers = e.pointerList;
+      function onPointerUp (e) { 
 
-  for(var i = 0; i<e.nbPointers; i++){
-    var pointer =pointers[i]; 
-    if(leftPointerID == pointer.identifier)
-    {
-      leftPointerPos.reset(pointer.pageX, pointer.pageY); 
-      leftVector.copyFrom(leftPointerPos); 
-      leftVector.minusEq(leftPointerStartPos); 	
-      break; 		
-    }		
-  }
-} 
+        if (e.nbPointers === 0)
+        {
+          vs.removePointerListener (canvas, vs.POINTER_MOVE, onPointerMove, false);
+          vs.removePointerListener (canvas, vs.POINTER_END, onPointerUp, false);
+          _move_listening = false;
+        }
 
-function onPointerUp(e) { 
+        pointers = e.pointerList; 
+        if (e.nbPointers === 0) {
+          leftPointerID = -1; 
+          if (e.type === vs.PointerTypes.TOUCH) {
+            leftVector.reset (0,0); 
+          }
+        }
+      }
 
-  if (e.nbPointers === 0)
-  {
-    vs.removePointerListener (canvas, vs.POINTER_MOVE, onPointerMove, false );
-    vs.removePointerListener (canvas, vs.POINTER_END, onPointerUp, false );
-    _move_listening = false;
-  }
+      function setupCanvas() {
 
-  pointers = e.pointerList; 
-  if (e.nbPointers == 0) {
-    leftPointerID = -1; 
-    if (e.type == vs.PointerTypes.TOUCH) {
-      leftVector.reset(0,0); 
-    }
-  }
-}
+        canvas = document.createElement ('canvas');
+        ctx = canvas.getContext ('2d');
+        container = document.createElement ('div');
+        container.className = "container";
 
+        document.body.appendChild (container);
+        container.appendChild (canvas);	
 
-function setupCanvas() {
+        resetCanvas ();
 
-  canvas = document.createElement( 'canvas' );
-  ctx = canvas.getContext( '2d' );
-  container = document.createElement( 'div' );
-  container.className = "container";
-
-  document.body.appendChild( container );
-  container.appendChild(canvas);	
-
-  resetCanvas(); 
-
-  ctx.strokeStyle = "#ffffff";
-  ctx.lineWidth =2;	
-}
-
-
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 2;	
+      }
       </script>
     </body>
   </html>
