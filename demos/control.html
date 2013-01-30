@@ -191,6 +191,7 @@ function makeBullet() {
 var _move_listening = false;
 
 function onPointerDown(e) {
+  e.preventDefault();
   pointers = e.pointerList;
 
   if (!_move_listening)
