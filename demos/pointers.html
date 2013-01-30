@@ -84,27 +84,6 @@ function draw() {
   vs.requestAnimationFrame (draw);
 }
 
-/*	
-*	Touch event (e) properties : 
-*	e.touches: 			Array of touch objects for every finger currently touching the screen
-*	e.targetTouches: 	Array of touch objects for every finger touching the screen that
-*						originally touched down on the DOM object the transmitted the event.
-*	e.changedTouches	Array of touch objects for touches that are changed for this event. 					
-*						I'm not sure if this would ever be a list of more than one, but would 
-*						be bad to assume. 
-*
-*	Touch objects : 
-*
-*	identifier: An identifying number, unique to each touch event
-*	target: DOM object that broadcast the event
-*	clientX: X coordinate of touch relative to the viewport (excludes scroll offset)
-*	clientY: Y coordinate of touch relative to the viewport (excludes scroll offset)
-*	screenX: Relative to the screen
-*	screenY: Relative to the screen
-*	pageX: Relative to the full page (includes scrolling)
-*	pageY: Relative to the full page (includes scrolling)
-*/	
-
 var _move_listening = false;
 
 function onPointerDown(e) {
@@ -130,7 +109,6 @@ function onPointerUp(e) {
     _move_listening = false;
   }
 }
-
 
 function setupCanvas() {
 
