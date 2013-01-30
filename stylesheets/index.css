@@ -67,6 +67,10 @@ ul, ol {
   margin-left: 15px;
 }
 
+section {
+  padding: 0 10px;
+}
+
 section > h2 {
   padding-top: 40px;
   font-size: 1.7em;
