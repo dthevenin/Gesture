@@ -92,7 +92,7 @@ build/vs_gesture.js: src/PointerEvent.js src/GestureEvent.js
 ###                    libs
 ##############################################################
 
-extern_libs: build/vs_util.js build/vs_transform.js
+extern_libs: build/vs_util.js
 	
 build/vs_util.js:
 	-$(MKPATH) tmp/
@@ -101,11 +101,4 @@ build/vs_util.js:
 	-$(CP) tmp/build/firminCSSMatrix.js build/firminCSSMatrix.js
 	-$(CP) tmp/build/vs_util_min.js build/vs_util_min.js
 	-$(CP) tmp/build/firminCSSMatrix_min.js build/firminCSSMatrix_min.js
-	-$(RM_RF) tmp
-	
-build/vs_transform.js:
-	-$(MKPATH) tmp/
-	git clone https://github.com/dthevenin/Transform.git tmp
-	-$(CP) tmp/build/vs_transform.js build/vs_transform.js
-	-$(CP) tmp/build/vs_transform_min.js build/vs_transform_min.js
 	-$(RM_RF) tmp
