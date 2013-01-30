@@ -1,7 +1,8 @@
 Gesture
 =======
 
-Gesture.js uniformizes pointer and gestures input across mobile and desktop browsers.
+Gesture.js uniformizes pointer and gesture inputs across mobile and desktop browsers.
+
 The code comes from ViniSketch Toolkit and was influenced by Pointer.js 
 from borismus and his article: http://smus.com/mouse-touch-pointer/ . 
 
@@ -13,4 +14,4 @@ The mains difference with Pointer.js are:
 The lib works on w8-IE10, Chrome, Safari, FireFox, Android stock browser,
 Android Chrome, Android FireFox, iOS, FireFox OS…
 
-ref: Demo@http://dthevenin.github.com/Gesture/
+Read More: http://dthevenin.github.com/Gesture/
