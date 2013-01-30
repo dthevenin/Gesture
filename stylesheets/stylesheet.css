@@ -91,7 +91,7 @@ header h2 {
 }
 
 .inner {
-  width: 620px;
+  width: 768px;
   margin: 0 auto;
 }
 
@@ -341,10 +341,17 @@ footer a:hover {
 ================================================== */
 
 /* Smaller than standard 960 (devices and browsers) */
-@media only screen and (max-width: 959px) {}
+@media only screen and (max-width: 960px) {
+
+}
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
-@media only screen and (min-width: 768px) and (max-width: 959px) {}
+@media only screen and (min-width: 768px) and (max-width: 960px) {
+  .inner {
+    width: 768px;
+    margin: 0 auto;
+  }
+}
 
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 767px) {
@@ -376,3 +383,15 @@ footer a:hover {
 
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
 @media only screen and (max-width: 479px) {}
+
+.blue {
+  background-color:rgb(156, 225, 228);
+}
+
+.green {
+  background-color:rgb(203, 233, 196);
+}
+
+.pink {
+  background-color:rgb(253, 213, 248);
+}

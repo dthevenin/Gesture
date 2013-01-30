@@ -14,7 +14,7 @@ footer a {
 
 div.tiles,
 #downloads {
-  width: 960px;
+  width: 100%;
   margin: 10px auto;
   padding: 0;
   height: 100%;
@@ -22,27 +22,25 @@ div.tiles,
 }
 
 @media (min-width: 720px) and (max-width: 960px) {
-  div.tiles,
-  #downloads  {
+  div.tiles, #downloads {
     width: 720px;
   }
 }
 
 @media (min-width: 480px) and (max-width: 720px) {
-  div.tiles  {
+  div.tiles, #downloads {
     width: 480px;
   }
 }
 
 @media (max-width: 480px) {
-  div.tiles  {
+  div.tiles, #downloads {
     width: 320px;
   }
 }
 
 div.tiles > div {
   font-size: 16px;
-  border-radius: 5px;
   width: 220px;
   height: 220px;
   margin: 10px;
