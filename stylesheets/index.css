@@ -26,12 +26,6 @@ header {
   box-shadow: 0 3px 5px #888;
 }
 
-header > h1 {
-  float: left;
-  font-size: 38px;
-  margin: 10px 0px 0px 40px;
-}
-
 header > h2 {
   margin: 5px 0px 0px 0px;
 }
