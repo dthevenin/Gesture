@@ -587,11 +587,12 @@ function getAngle (pointer1, pointer2 )
   return Math.atan2 (pointer2.pageY - pointer1.pageY, pointer2.pageX - pointer1.pageX) * 180 / Math.PI;
 };
 
+var __init_distance = 0, __init_angle = 0, __init_barycentre, __init_pos;
+
 function getBarycentre (pointers)
 {
   var nb_pointer = pointers.length, index = 0, x = 0, y = 0;
   if (nb_pointer === 0) return {X: 0, y: 0};
-  var dec = pointers[0].target.__init_pos;
  
   for (;index < nb_pointer; index++)
   {
@@ -601,7 +602,7 @@ function getBarycentre (pointers)
     y += pointer.pageY;
   }
   
-  return {x: x / nb_pointer - dec.x, y: y / nb_pointer - dec.y};
+  return {x: x / nb_pointer - __init_pos.x, y: y / nb_pointer - __init_pos.y};
 };
 
 function getTranslate (pos1, pos2)
@@ -615,13 +616,12 @@ var buildPaylaod = function (event, end)
 
   return {
     scale: (end)?undefined:
-      getDistance (event.targetPointerList [0], event.targetPointerList [1]) / 
-      event.target.__init_distance,
+      getDistance (event.targetPointerList [0], event.targetPointerList [1]) /
+        __init_distance,
     rotation: (end)?undefined:
       getAngle (event.targetPointerList [0], event.targetPointerList [1]) - 
-      event.target.__init_angle,
-    translation: (end)?undefined:
-      getTranslate (barycentre, event.target.__init_barycentre),
+        __init_angle,
+    translation: (end)?undefined: getTranslate (barycentre, __init_barycentre),
     nbPointers : event.nbPointers,
     pointerList : event.pointerList,
     targetPointerList: event.targetPointerList,
@@ -636,18 +636,16 @@ var gestureStartListener = function (event, listener)
   if (event.targetPointerList.length < 2) return;
   if (!_gesture_follow)
   {
-    event.target.__init_distance =
+    __init_distance =
       getDistance (event.targetPointerList [0], event.targetPointerList [1]);
-    event.target.__init_angle =
+    __init_angle =
       getAngle (event.targetPointerList [0], event.targetPointerList [1]);
     
     var comp = event.targetPointerList[0].target._comp_;
-    var init_pos = util.getElementAbsolutePosition (event.targetPointerList[0].target, true);
+    __init_pos = util.getElementAbsolutePosition (event.targetPointerList[0].target, true);
 //    init_pos = init_pos.matrixTransform (comp.getParentCTM ());
     
-    event.target.__init_pos = init_pos;
-    var init_barycentre = getBarycentre (event.targetPointerList);
-    event.target.__init_barycentre = init_barycentre;
+     __init_barycentre = getBarycentre (event.targetPointerList);
        
     document.addEventListener (vs.POINTER_MOVE, gestureChangeListener);
     document.addEventListener (vs.POINTER_END, gestureEndListener);
@@ -691,8 +689,7 @@ var gestureEndListener = function (event)
 function buildGestureList (evt)
 {
   evt.barycentre = {x: evt.pageX, y: evt.pageY};
-  evt.translation =
-      getTranslate (evt.barycentre, event.target.__init_barycentre);
+  evt.translation = getTranslate (evt.barycentre, __init_barycentre);
   evt.pointerList = [
     new Pointer (evt, PointerTypes.TOUCH, MOUSE_ID)
   ];
@@ -702,7 +699,7 @@ function buildGestureList (evt)
 
 var gestureIOSStartListener = function (event, listener)
 {
-  event.target.__init_barycentre = {x: event.pageX, y: event.pageY};
+  __init_barycentre = {x: event.pageX, y: event.pageY};
   buildGestureList (event);
   listener (event);
 };
