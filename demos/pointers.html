@@ -87,6 +87,7 @@ function draw() {
 var _move_listening = false;
 
 function onPointerDown(e) {
+  e.preventDefault();
   touches = e.pointerList;
   if (_move_listening) return;
   vs.addPointerListener (canvas, vs.POINTER_MOVE, onPointerMove, false );
@@ -96,7 +97,6 @@ function onPointerDown(e) {
 
 function onPointerMove(e) {
   // Prevent the browser from doing its default thing (scroll, zoom)
-  e.preventDefault();
   touches = e.pointerList; 
 } 
 
