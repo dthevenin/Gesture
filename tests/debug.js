@@ -1,6 +1,5 @@
 function update_debug (pointers, pointersToRemove, clear, angle)
 {
-  return;
   // remove debug info
   if (clear)
   {
