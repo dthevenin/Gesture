@@ -41,9 +41,9 @@ all :: release
 Debug :: debug
 Release :: release
 
-release :: clean makedirs extern_libs gesture_js_release
+release :: clean makedirs extern_libs gesture_js_release pointer_js_release pointer_js_standalone_release
 
-debug :: clean makedirs extern_libs gesture_js_debug
+debug :: clean makedirs extern_libs gesture_js_debug pointer_js_debug pointer_js_standalone_debug
 
 clean :: clean_libs
 
@@ -54,6 +54,10 @@ force_clean:
 clean_libs:
 	-$(RM_RF) build/vs_gesture.js
 	-$(RM_RF) build/vs_gesture_min.js
+	-$(RM_RF) build/vs_pointer.js
+	-$(RM_RF) build/vs_pointer_min.js
+	-$(RM_RF) build/vs_pointer_standalone.js
+	-$(RM_RF) build/vs_pointer_standalone_min.js
 	-$(RM_RF) tmp
 		
 makedirs:
@@ -71,6 +75,39 @@ if (typeof exports === 'undefined') { exports = this; }\n\
 var vs = exports.vs, util = vs.util;\n"
   LIB_FOOTER = "}).call(this);"
 endif
+
+###                    pointer_js
+##############################################################
+
+pointer_js_release:	build/vs_pointer_min.js
+pointer_js_debug:	build/vs_pointer.js
+pointer_js_standalone_debug:	build/vs_pointer_standalone.js
+pointer_js_standalone_release:	build/vs_pointer_standalone_min.js
+
+build/vs_pointer_min.js:	build/vs_pointer.js
+	$(COMPILE) --js=$< --js_output_file=$@
+
+build/vs_pointer.js:	src/PointerEvent.js
+	$(ECHO) $(LIB_HEADER) >> $@
+	$(CAT) $< >> $@
+	$(ECHO) $(LIB_FOOTER) >> $@
+
+build/vs_pointer_standalone_min.js:	build/vs_pointer_standalone.js
+	$(COMPILE) --js=$< --js_output_file=$@
+
+build/vs_pointer_standalone.js:	src/PointerEvent.js
+	$(ECHO) "(function () {\n\
+if (typeof exports === 'undefined') { exports = this; }\n\
+if (typeof exports.vs === 'undefined') {\n\
+  exports.vs = {\n\
+    util: {\n\
+      isFunction: function (x) { return typeof x === 'function'; }\n\
+    }\n\
+  };\n\
+}\n\
+var vs = exports.vs, util = vs.util;\n" > $@
+	$(CAT) $< >> $@
+	$(ECHO) "}).call(this);" >> $@
 
 ###                    gesture_js
 ##############################################################
