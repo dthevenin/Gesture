@@ -16,6 +16,10 @@
   along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+if (window.vs == null) {
+  window.vs = {};
+}
+
 /* touch event messages */
 /**
  * @name vs.core.EVENT_SUPPORT_TOUCH
@@ -399,10 +403,10 @@ function addPointerListener (node, type, listener, useCapture)
     return;
   }
   var func = listener;
-  if (!util.isFunction (listener))
+  if (typeof listener !== "function")
   {
     func = listener.handleEvent;
-    if (util.isFunction (func)) func = func.bind (listener);
+    if (typeof func === "function") func = func.bind (listener);
   }
 
   if (getBindingIndex (node, type, listener) !== -1)
