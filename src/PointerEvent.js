@@ -17,9 +17,6 @@
 */
 
 /* touch event messages */
-/**
- * @name vs.core.EVENT_SUPPORT_TOUCH
- */
 var EVENT_SUPPORT_TOUCH = false;
 var EVENT_SUPPORT_GESTURE = false;
 var hasMSPointer = window.navigator.msPointerEnabled;
@@ -470,7 +467,12 @@ function createCustomEvent (eventName, target, payload)
 /********************************************************************
                       Export
 *********************************************************************/
-/** @private */
+
+/**
+ * @name vs.EVENT_SUPPORT_TOUCH
+ */
+vs.EVENT_SUPPORT_TOUCH = EVENT_SUPPORT_TOUCH;
+
 vs.createCustomEvent = createCustomEvent;
 vs.removePointerListener = removePointerListener;
 vs.addPointerListener = addPointerListener;
