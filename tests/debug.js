@@ -33,17 +33,17 @@ function update_debug (pointers, pointersToRemove, clear, angle)
     y += pointer.pageY;
   }
   
-  var barycentre = this._debugs ['barycentre'];
-  if (!barycentre)
+  var centroid = this._debugs ['centroid'];
+  if (!centroid)
   {
-    barycentre = document.createElement ('div');
-    barycentre.className = '__debug__barycentre';
-    this._debugs ['barycentre'] = barycentre;
-    document.body.appendChild (barycentre, this.view);
+    centroid = document.createElement ('div');
+    centroid.className = '__debug__centroid';
+    this._debugs ['centroid'] = centroid;
+    document.body.appendChild (centroid, this.view);
   }
-  vs.util.setElementPos (barycentre, x / nb_pointer - 10, y / nb_pointer - 10);
-  if (vs.util.isNumber (angle)) barycentre.innerHTML = Math.floor (angle);
-  else barycentre.innerHTML = "";
+  vs.util.setElementPos (centroid, x / nb_pointer - 10, y / nb_pointer - 10);
+  if (vs.util.isNumber (angle)) centroid.innerHTML = Math.floor (angle);
+  else centroid.innerHTML = "";
   
   // remove old pointers trace
   for (var index = 0; index < pointersToRemove.length; index++)

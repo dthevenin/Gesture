@@ -41,7 +41,7 @@ function gestureStart (e)
 {
   vs.addPointerListener (document, vs.GESTURE_CHANGE, this);
   vs.addPointerListener (document, vs.GESTURE_END, this);
-  this.vsSetNewTransformOrigin (e.barycentre);
+  this.vsSetNewTransformOrigin (e.centroid);
 
   update_debug (e.targetPointerList, e.changedPointerList, false, e.rotation);
 };
