@@ -588,9 +588,9 @@ function getAngle (pointer1, pointer2 )
   return Math.atan2 (pointer2.pageY - pointer1.pageY, pointer2.pageX - pointer1.pageX) * 180 / Math.PI;
 };
 
-var __init_distance = 0, __init_angle = 0, __init_barycentre, __init_pos;
+var __init_distance = 0, __init_angle = 0, __init_centroid, __init_pos;
 
-function getBarycentre (pointers)
+function getCentroid (pointers)
 {
   var nb_pointer = pointers.length, index = 0, x = 0, y = 0;
   if (nb_pointer === 0) return {X: 0, y: 0};
@@ -613,7 +613,7 @@ function getTranslate (pos1, pos2)
 
 var buildPaylaod = function (event, end)
 {
-  var barycentre = (end)?undefined:getBarycentre (event.targetPointerList);
+  var centroid = (end)?undefined:getCentroid (event.targetPointerList);
 
   return {
     scale: (end)?undefined:
@@ -622,11 +622,11 @@ var buildPaylaod = function (event, end)
     rotation: (end)?undefined:
       getAngle (event.targetPointerList [0], event.targetPointerList [1]) - 
         __init_angle,
-    translation: (end)?undefined: getTranslate (barycentre, __init_barycentre),
+    translation: (end)?undefined: getTranslate (centroid, __init_centroid),
     nbPointers : event.nbPointers,
     pointerList : event.pointerList,
     targetPointerList: event.targetPointerList,
-    barycentre : barycentre,
+    centroid : centroid,
     changedPointerList: event.changedPointerList
   };
 };
@@ -646,7 +646,7 @@ var gestureStartListener = function (event, listener)
     __init_pos = util.getElementAbsolutePosition (event.targetPointerList[0].target, true);
 //    init_pos = init_pos.matrixTransform (comp.getParentCTM ());
     
-     __init_barycentre = getBarycentre (event.targetPointerList);
+     __init_centroid = getCentroid (event.targetPointerList);
        
     document.addEventListener (vs.POINTER_MOVE, gestureChangeListener);
     document.addEventListener (vs.POINTER_END, gestureEndListener);
@@ -689,8 +689,8 @@ var gestureEndListener = function (event)
 
 function buildGestureList (evt)
 {
-  evt.barycentre = {x: evt.pageX, y: evt.pageY};
-  evt.translation = getTranslate (evt.barycentre, __init_barycentre);
+  evt.centroid = {x: evt.pageX, y: evt.pageY};
+  evt.translation = getTranslate (evt.centroid, __init_centroid);
   evt.pointerList = [
     new Pointer (evt, PointerTypes.TOUCH, MOUSE_ID)
   ];
@@ -700,7 +700,7 @@ function buildGestureList (evt)
 
 var gestureIOSStartListener = function (event, listener)
 {
-  __init_barycentre = {x: event.pageX, y: event.pageY};
+  __init_centroid = {x: event.pageX, y: event.pageY};
   buildGestureList (event);
   listener (event);
 };
