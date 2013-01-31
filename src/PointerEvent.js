@@ -467,12 +467,6 @@ function createCustomEvent (eventName, target, payload)
 /********************************************************************
                       Export
 *********************************************************************/
-
-/**
- * @name vs.EVENT_SUPPORT_TOUCH
- */
-vs.EVENT_SUPPORT_TOUCH = EVENT_SUPPORT_TOUCH;
-
 vs.createCustomEvent = createCustomEvent;
 vs.removePointerListener = removePointerListener;
 vs.addPointerListener = addPointerListener;
