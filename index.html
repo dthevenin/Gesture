@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/index.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/bender.css" media="screen" />
-    <link rel="stylesheet" href="stylesheets/zenburn.css">
+    <link rel="stylesheet" href="stylesheets/vs.css">
 
     <title>Gesture.js by dthevenin</title>
   </head>
@@ -28,7 +28,7 @@
         <br>
 
         <section id="main_content">
-          <h3>Welcome to Gesture.js Page</h3>
+          <h1>Welcome to Gesture.js Page</h1>
            Gesture.js uniformizes pointer and gesture inputs across mobile and desktop browsers.
            The code comes from <a href="https://github.com/vinisketch/VSToolkit">ViniSketch Toolkit</a>
            and was influenced by Pointer.js from borismus and his <a href="http://smus.com/mouse-touch-pointer/">article</a>.
@@ -45,7 +45,7 @@
 
         <hr>
         <section id="main_content">
-          <h3>Examples and demos</h3>
+          <h2>Examples and demos</h2>
           <div class="tiles">
             <div class="text green">
               <span>Pointer plotter</span>
@@ -92,35 +92,119 @@
 
         <hr>
         <section id="main_content">
-         <h3>API</h3>
-         Methods:
-<pre><code class="javascript">vs.addPointerListener (node, event name, clb|objet, capture);
-vs.removePointerListener (node, event name, clb|objet, capture);
+         <h2>Listeners</h2>
+         <h3>vs.addPointerListener</h3>
+         <h4>Summary</h4>
+<p style="padding: 10px">addPointerListener() registers a single event listener on a single target.
+The event target may be a single element in a document, the document itself,
+a window.
+
+To register more than one event listener for the target, call 
+addPointerListener() for the same target but with different event types or 
+capture parameters.</p>
+         <h4>Syntax</h4>
+<pre><code class="javascript">vs.addPointerListener (node, event name, listener[, capture]);
 </code></pre>
+        <h5>node</h5>
+<p style="padding: 5px 10px">The event target.</p>
+        <h5>event name</h5>
+<p style="padding: 5px 10px">A string representing the event type to listen for.</p>
+        <h5>listener</h5>
+<p style="padding: 5px 10px">
+The object that receives a notification when an event of the specified type 
+occurs. This must be an object implementing the EventListener interface, or
+simply a JavaScript function.</p>
+        <h5>useCapture Optional</h5>
+<p style="padding: 5px 10px">
+If true, useCapture indicates that the user wishes to initiate capture.</p>
 
-         Events:
-<pre><code class="javascript">vs.POINTER_START
-vs.POINTER_MOVE
-vs.POINTER_END
-vs.GESTURE_START
-vs.GESTURE_CHANGE
-vs.GESTURE_AND
+         <h3>vs.removePointerListener</h3>
+         <h4>Summary</h4>
+<p style="padding: 10px">removeEventListener() allows the removal of event listeners from the event target.</p>
+         <h4>Syntax</h4>
+<pre><code class="javascript">vs.removePointerListener (node, event name, listener[, capture]);
 </code></pre>
+        <h5>node</h5>
+<p style="padding: 5px 10px">The event target.</p>
+        <h5>event name</h5>
+<p style="padding: 5px 10px">A string representing the event type to listen for.</p>
+        <h5>listener</h5>
+<p style="padding: 5px 10px">The listener parameter indicates the EventListener function to be removed.</p>
+        <h5>useCapture Optional</h5>
+<p style="padding: 5px 10px">
+If true, useCapture indicates that the user wishes to initiate capture.</p>
 
-        The event extension:
-<pre><code class="javascript">/** for pointer and gesture events */
-e.pointerList; /** Array of all pointers */
-e.nbPointer; /** Number of pointers */
-e.targetPointerList; /** Array of pointers associated to the target */
-e.changedPointerList; /** Array of changed pointers */
-
-/** only for gesture events */
-e.scale; /** The scale */
-e.rotation; /** The rotation angle in deg */
-e.translate; /** The translation vector [x, y] */
-e.centroid; /** The pointers centroid, a vs.Point object */
+         <h2>Pointer / Gesture Events</h2>
+         <h3>Summary</h3>
+        List of events fired for one or multiple pointing device(s) (mouse, touch or pen), on down, move or up over an element.
+         <h3>Pointer Events</h3>
+        <h4>vs.POINTER_START</h4>
+<p style="padding: 5px 10px">
+Event that is triggered when a contact touches the screen on element.
+</p>
+        <h4>vs.POINTER_MOVE</h4>
+<p style="padding: 5px 10px">
+Event that is triggered when a contact moves on the screen while over an element.
+</p>
+        <h4>vs.POINTER_END</h4>
+<p style="padding: 5px 10px">
+Event that is triggered when a contact is raised off of the screen over an element.
+</p>
+         <h3>Gesture Events</h3>
+        <h4>vs.GESTURE_START</h4>
+<p style="padding: 5px 10px">
+Triggered when the screen is touched on a location over this element.
+</p>
+        <h4>vs.GESTURE_CHANGE</h4>
+<p style="padding: 5px 10px">
+Triggered when the finger positions associated with the interaction moves on the screen. It will also be triggered during inertia processing.
+</p>
+        <h4>vs.GESTURE_END</h4>
+<p style="padding: 5px 10px">
+This event fires when all associated contacts are removed from the surface, and any inertia related movements have stopped.
+</p>
+      <h2>Events Structure</h2>
+      <h3>PointerEvent</h3>
+      The PointerEvent class encapsulates information about a touch event.
+      <h4>Accessing Properties</h4>
+       <h5>pointerList</h5>
+<p style="padding: 5px 10px">
+A collection of Pointer objects representing all pointers.
+</p>
+       <h5>nbPointer</h5>
+<p style="padding: 5px 10px">Number of pointers</p>
+       <h5>targetPointerList</h5>
+<p style="padding: 5px 10px">
+A collection of Pointer objects representing all pointers associated with this target.
+</p>
+       <h5>changedPointerList</h5>
+<p style="padding: 5px 10px">
+A collection of Pointer objects representing all pointers that changed in
+this event.</p>
 </code></pre>
+        <h3>GestureEvent</h3>
+       The GestureEvent class encapsulates information about a multi-touch gesture.
+       GestureEvent is a PointerEvent with more high level information related
+       to the gesture.
+       <h4>Accessing Properties</h4>
+       <h5>scale</h5>
+<p style="padding: 5px 10px">
+The distance between two fingers since the start of an event, as a multiplier of the initial distance.
+</p>
+       <h5>rotation</h5>
+<p style="padding: 5px 10px">
+The delta rotation since the start of an event, in degrees, where clockwise is positive and counter-clockwise is negative.
+</p>
+       <h5>translate</h5>
+<p style="padding: 5px 10px">
+The delta translation since the start of an event. This is a vector [x, y]
+</p>
+       <h5>centroid</h5>
+<p style="padding: 5px 10px">
+The centroid is the geometric center of the pointers position. Type: vs.Point object
+</p>
 
+        <h3>Pointer Object</h3>
         The Pointer class:
 <pre><code class="javascript">{
   type, /** vs.PointerTypes */
@@ -133,7 +217,7 @@ e.centroid; /** The pointers centroid, a vs.Point object */
 }
 </code></pre>
 
-        The vs.PointerTypes:
+        <h3>vs.PointerTypes</h3>
 <pre><code class="javascript">{
   TOUCH,
   PEN,
@@ -141,7 +225,7 @@ e.centroid; /** The pointers centroid, a vs.Point object */
 }
 </code></pre>
 
-        Example:
+        <h2>Example</h2>
 <pre><code class="javascript">vs.addPointerListener (node, vs.POINTER_START, onPointerDown);
 
 var listening = false;
@@ -183,7 +267,7 @@ function onPointerUp (e) {
 
         <hr>
         <footer>
-          Gesture is maintained by <a href="https://github.com/dthevenin">dthevenin</a><br>
+          Gesture is maintained by <a href="http://dthevenin.github.com/">dthevenin</a><br>
         </footer>
 
         
