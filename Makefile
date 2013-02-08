@@ -5,13 +5,13 @@
 ##
 ##############################################################
 
-###                     Declaration 
+###                     Declaration
 ##############################################################
 
 SHELL = /bin/sh
 CHMOD = chmod
 CP = cp
-XTEMP = ../lib/manage_template.sh 
+XTEMP = ../lib/manage_template.sh
 MV = mv
 NOOP = $(SHELL) -c true
 RM_F = rm -f
@@ -30,7 +30,7 @@ JAVA = java
 COMPILE = $(JAVA) -jar tools/closurecompiler/compiler.jar --language_in=ECMASCRIPT5
 COMPILE_ADV = $(JAVA) -jar tools/closurecompiler/compiler.jar --compilation_level ADVANCED_OPTIMIZATIONS
 COMPILE_YUI = $(JAVA) -cp tools/yuicompressor/jargs-1.0.jar:tools/yuicompressor/rhino-1.6R7.jar -jar tools/yuicompressor/yuicompressor-2.4.2.jar
-GENDOC = $(JAVA) -jar tools/jsdoc-toolkit/jsrun.jar tools/jsdoc-toolkit/app/run.js 
+GENDOC = $(JAVA) -jar tools/jsdoc-toolkit/jsrun.jar tools/jsdoc-toolkit/app/run.js
 COMPILE_LESS = /usr/local/bin/lessc
 
 ###                         RELEASE
@@ -59,7 +59,7 @@ clean_libs:
 	-$(RM_RF) build/vs_pointer_standalone.js
 	-$(RM_RF) build/vs_pointer_standalone_min.js
 	-$(RM_RF) tmp
-		
+
 makedirs:
 	-$(MKPATH) build/
 
@@ -71,8 +71,7 @@ ifdef REQUIRE_JS
   LIB_FOOTER = "return util;\n});"
 else
   LIB_HEADER = "(function(){ \n\
-if (typeof exports === 'undefined') { exports = this; }\n\
-var vs = exports.vs, util = vs.util;\n"
+var vs = this.vs = this.vs || {}, util = vs.util = vs.util || {};\n"
   LIB_FOOTER = "}).call(this);"
 endif
 
@@ -114,7 +113,7 @@ var vs = exports.vs, util = vs.util;\n" > $@
 
 gesture_js_release: build/vs_gesture.js
 	-$(COMPILE) --js=build/vs_gesture.js --js_output_file=build/vs_gesture_min.js
-	
+
 gesture_js_debug: build/vs_gesture.js
 
 build/vs_gesture.js: src/PointerEvent.js src/GestureEvent.js
@@ -127,7 +126,7 @@ build/vs_gesture.js: src/PointerEvent.js src/GestureEvent.js
 ##############################################################
 
 extern_libs: build/vs_util.js
-	
+
 build/vs_util.js:
 	-$(MKPATH) tmp/
 	git clone https://github.com/dthevenin/Util.git tmp
