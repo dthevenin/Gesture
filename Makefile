@@ -96,15 +96,12 @@ build/vs_pointer_standalone_min.js:	build/vs_pointer_standalone.js
 
 build/vs_pointer_standalone.js:	src/PointerEvent.js
 	$(ECHO) "(function () {\n\
-if (typeof exports === 'undefined') { exports = this; }\n\
-if (typeof exports.vs === 'undefined') {\n\
-  exports.vs = {\n\
+  var vs = this.vs = {\n\
     util: {\n\
       isFunction: function (x) { return typeof x === 'function'; }\n\
     }\n\
   };\n\
-}\n\
-var vs = exports.vs, util = vs.util;\n" > $@
+  var util = vs.util;\n" > $@
 	$(CAT) $< >> $@
 	$(ECHO) "}).call(this);" >> $@
 

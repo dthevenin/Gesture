@@ -1,13 +1,10 @@
 (function () {
-if (typeof exports === 'undefined') { exports = this; }
-if (typeof exports.vs === 'undefined') {
-  exports.vs = {
+  var vs = this.vs = {
     util: {
       isFunction: function (x) { return typeof x === 'function'; }
     }
   };
-}
-var vs = exports.vs, util = vs.util;
+  var util = vs.util;
 
 /**
   Copyright (C) 2009-2012. David Thevenin, ViniSketch SARL (c), and 
