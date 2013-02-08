@@ -1,6 +1,5 @@
 (function(){ 
- if (typeof exports === 'undefined') { exports = this; }
- var vs = exports.vs, util = vs.util;
+ var vs = this.vs = this.vs || {}, util = vs.util = vs.util || {};
 
 /**
   Copyright (C) 2009-2012. David Thevenin, ViniSketch SARL (c), and 
@@ -21,9 +20,6 @@
 */
 
 /* touch event messages */
-/**
- * @name vs.core.EVENT_SUPPORT_TOUCH
- */
 var EVENT_SUPPORT_TOUCH = false;
 var EVENT_SUPPORT_GESTURE = false;
 var hasMSPointer = window.navigator.msPointerEnabled;
@@ -474,7 +470,6 @@ function createCustomEvent (eventName, target, payload)
 /********************************************************************
                       Export
 *********************************************************************/
-/** @private */
 vs.createCustomEvent = createCustomEvent;
 vs.removePointerListener = removePointerListener;
 vs.addPointerListener = addPointerListener;
