@@ -312,7 +312,7 @@ function msPointerCancelHandler (event, listener)
 
 /*************************************************************/
 
-var pointerStartHandler, pointerMoveHandler, pointerEndHandle, pointerCancelHandler;
+var pointerStartHandler, pointerMoveHandler, pointerEndHandler, pointerCancelHandler;
 
 if (EVENT_SUPPORT_TOUCH)
 {
