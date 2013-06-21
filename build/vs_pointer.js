@@ -52,7 +52,7 @@ else
   POINTER_START = 'mousedown';
   POINTER_MOVE = 'mousemove';
   POINTER_END = 'mouseup';
-  POINTER_CANCEL = 'mouseup';
+  POINTER_CANCEL = null;
 }
 
 // TODO(smus): Come up with a better solution for this. This is bad because
@@ -394,6 +394,8 @@ function managePointerListenerRemove (node, type, binding)
  */
 function addPointerListener (node, type, listener, useCapture)
 {
+  if (!type) return;
+  
   if (!listener) {
     console.error ("addPointerListener no listener");
     return;
@@ -433,6 +435,8 @@ function addPointerListener (node, type, listener, useCapture)
 
 function removePointerListener (node, type, listener, useCapture)
 {
+  if (!type) return;
+  
   if (!listener) {
     console.error ("removePointerListener no listener");
     return;
