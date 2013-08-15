@@ -69,8 +69,8 @@ Pointer.prototype.configureWithEvent = function (evt)
 {
   this.pageX = evt.pageX;
   this.pageY = evt.pageY;
-  this.clientX = evt.clientX;
-  this.clientY = evt.clientY;
+  this.clientX = evt.layerX;
+  this.clientY = evt.layerY;
   this.target = evt.target;
   this.currentTarget = evt.currentTarget;
 }
