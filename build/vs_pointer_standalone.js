@@ -104,7 +104,7 @@ function buildTouchList (evt, target_id)
     var touch = evt.touches[i];
     var pointer = new Pointer (
       touch, PointerTypes.TOUCH, touch.identifier,
-      evt.layerX, evt.layerY
+      touch.clientX, touch.clientY
     );
     pointers.push (pointer);
   }
@@ -116,7 +116,7 @@ function buildTouchList (evt, target_id)
     if (target_id && pointerEvents [touch.identifier] != target_id) continue;
     var pointer = new Pointer (
       touch, PointerTypes.TOUCH, touch.identifier,
-      evt.layerX, evt.layerY
+      touch.clientX, touch.clientY
     );
     pointers.push (pointer);
   }
@@ -127,7 +127,7 @@ function buildTouchList (evt, target_id)
     var touch = evt.changedTouches[i];
     var pointer = new Pointer (
       touch, PointerTypes.TOUCH, touch.identifier,
-      evt.layerX, evt.layerY
+      evt.clientX, evt.clientY
     );
     pointers.push (pointer);
   }
