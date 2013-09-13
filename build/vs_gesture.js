@@ -657,7 +657,7 @@ var gestureStartListener = function (event, listener)
     __init_pos = util.getElementAbsolutePosition (event.targetPointerList[0].target, true);
 //    init_pos = init_pos.matrixTransform (comp.getParentCTM ());
     
-     __init_centroid = getCentroid (event.targetPointerList);
+    __init_centroid = getCentroid (event.targetPointerList);
        
     document.addEventListener (vs.POINTER_MOVE, gestureChangeListener);
     document.addEventListener (vs.POINTER_END, gestureEndListener);
