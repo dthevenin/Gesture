@@ -29,7 +29,9 @@ else if (hasMSPointer) { EVENT_SUPPORT_TOUCH = true; }
 else if (typeof document != "undefined" &&
     window.navigator && window.navigator.userAgent)
 {
-  if (window.navigator.userAgent.indexOf ('Android') !== -1 ||
+  if (window.navigator.userAgent.indexOf ('iPhone') !== -1 ||
+      window.navigator.userAgent.indexOf ('iPad') !== -1 ||
+      window.navigator.userAgent.indexOf ('Android') !== -1 ||
       window.navigator.userAgent.indexOf ('BlackBerry') !== -1)
   { EVENT_SUPPORT_TOUCH = true; }
 }
