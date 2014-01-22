@@ -27,12 +27,13 @@
 /* touch event messages */
 var EVENT_SUPPORT_TOUCH = false;
 var EVENT_SUPPORT_GESTURE = false;
+var hasPointer = window.navigator.pointerEnabled;
 var hasMSPointer = window.navigator.msPointerEnabled;
 
 if (typeof document != "undefined" && 'createTouch' in document)
   EVENT_SUPPORT_TOUCH = true;
 
-else if (hasMSPointer) { EVENT_SUPPORT_TOUCH = true; }
+else if (hasPointer || hasMSPointer) { EVENT_SUPPORT_TOUCH = true; }
 
 else if (typeof document != "undefined" &&
     window.navigator && window.navigator.userAgent)
@@ -47,10 +48,10 @@ var POINTER_START, POINTER_MOVE, POINTER_END, POINTER_CANCEL;
 
 if (EVENT_SUPPORT_TOUCH)
 {
-  POINTER_START = hasMSPointer ? 'MSPointerDown' : 'touchstart';
-  POINTER_MOVE = hasMSPointer ? 'MSPointerMove' : 'touchmove';
-  POINTER_END = hasMSPointer ? 'MSPointerUp' : 'touchend';
-  POINTER_CANCEL = hasMSPointer ? 'MSPointerCancel' : 'touchcancel';
+  POINTER_START = hasPointer ?  'pointerDown' : hasMSPointer ? 'MSPointerDown' : 'touchstart';
+  POINTER_MOVE = hasPointer ?  'pointerMove' : hasMSPointer ? 'MSPointerMove' : 'touchmove';
+  POINTER_END = hasPointer ?  'pointerUp' : hasMSPointer ? 'MSPointerUp' : 'touchend';
+  POINTER_CANCEL = hasPointer ?  'pointerCancel' : hasMSPointer ? 'MSPointerCancel' : 'touchcancel';
 }
 else
 {
@@ -285,8 +286,8 @@ var msRemovePointer = function (evt) {
 
   if (nbPointerListener === 0)
   {
-    document.removeEventListener ('MSPointerUp', msRemovePointer);
-    document.removeEventListener ('MSPointerCancel', msRemovePointer);
+    document.removeEventListener (hasPointer ? 'pointerUp' : 'MSPointerUp', msRemovePointer);
+    document.removeEventListener (hasPointer ? 'pointerCancel' : 'MSPointerCancel', msRemovePointer);
   }
 }
 
@@ -298,8 +299,8 @@ function msPointerDownHandler (event, listener, target_id)
 
   if (nbPointerListener === 0)
   {
-    document.addEventListener ('MSPointerUp', msRemovePointer);
-    document.addEventListener ('MSPointerCancel', msRemovePointer);
+    document.addEventListener (hasPointer ? 'pointerUp' : 'MSPointerUp', msRemovePointer);
+    document.addEventListener (hasPointer ? 'pointerCancel' : 'MSPointerCancel', msRemovePointer);
   }
   nbPointerListener ++;
 }
