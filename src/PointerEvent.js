@@ -40,10 +40,10 @@ var POINTER_START, POINTER_MOVE, POINTER_END, POINTER_CANCEL;
 
 if (EVENT_SUPPORT_TOUCH)
 {
-  POINTER_START = hasPointer ?  'pointerDown' : hasMSPointer ? 'MSPointerDown' : 'touchstart';
-  POINTER_MOVE = hasPointer ?  'pointerMove' : hasMSPointer ? 'MSPointerMove' : 'touchmove';
-  POINTER_END = hasPointer ?  'pointerUp' : hasMSPointer ? 'MSPointerUp' : 'touchend';
-  POINTER_CANCEL = hasPointer ?  'pointerCancel' : hasMSPointer ? 'MSPointerCancel' : 'touchcancel';
+  POINTER_START = hasPointer ?  'pointerdown' : hasMSPointer ? 'MSPointerDown' : 'touchstart';
+  POINTER_MOVE = hasPointer ?  'pointermove' : hasMSPointer ? 'MSPointerMove' : 'touchmove';
+  POINTER_END = hasPointer ?  'pointerup' : hasMSPointer ? 'MSPointerUp' : 'touchend';
+  POINTER_CANCEL = hasPointer ?  'pointercancel' : hasMSPointer ? 'MSPointerCancel' : 'touchcancel';
 }
 else
 {
@@ -278,8 +278,8 @@ var msRemovePointer = function (evt) {
 
   if (nbPointerListener === 0)
   {
-    document.removeEventListener (hasPointer ? 'pointerUp' : 'MSPointerUp', msRemovePointer);
-    document.removeEventListener (hasPointer ? 'pointerCancel' : 'MSPointerCancel', msRemovePointer);
+    document.removeEventListener (hasPointer ? 'pointerup' : 'MSPointerUp', msRemovePointer);
+    document.removeEventListener (hasPointer ? 'pointercancel' : 'MSPointerCancel', msRemovePointer);
   }
 }
 
@@ -291,8 +291,8 @@ function msPointerDownHandler (event, listener, target_id)
 
   if (nbPointerListener === 0)
   {
-    document.addEventListener (hasPointer ? 'pointerUp' : 'MSPointerUp', msRemovePointer);
-    document.addEventListener (hasPointer ? 'pointerCancel' : 'MSPointerCancel', msRemovePointer);
+    document.addEventListener (hasPointer ? 'pointerup' : 'MSPointerUp', msRemovePointer);
+    document.addEventListener (hasPointer ? 'pointercancel' : 'MSPointerCancel', msRemovePointer);
   }
   nbPointerListener ++;
 }
