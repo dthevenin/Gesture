@@ -62,21 +62,25 @@ else
 // positive integers.
 var MOUSE_ID = 31337;
 
-function Pointer (event, type, identifier, clientX, clientY)
+function Pointer (event, type, identifier, clientX, clientY, event_bis)
 {
-  this.configureWithEvent (event, clientX, clientY)
+  this.configureWithEvent (event, clientX, clientY, event_bis)
   this.type = type;
   this.identifier = identifier;
 }
 
-Pointer.prototype.configureWithEvent = function (evt, clientX, clientY)
+Pointer.prototype.configureWithEvent = function (evt, clientX, clientY, event_bis)
 {
   this.pageX = evt.pageX;
   this.pageY = evt.pageY;
   if (typeof clientX !== "undefiend") this.clientX = clientX;
   if (typeof clientY !== "undefiend") this.clientY = clientY;
-  this.target = evt.target;
-  this.currentTarget = evt.currentTarget;
+  
+  if (evt.target) this.target = evt.target;
+  else if (event_bis) this.target = event_bis.target;
+  
+  if (evt.currentTarget) this.currentTarget = evt.currentTarget;
+  else if (event_bis) this.currentTarget = event_bis.currentTarget;
 }
 
 var PointerTypes = {
@@ -100,7 +104,8 @@ function buildTouchList (evt, target_id)
     var touch = evt.touches[i];
     var pointer = new Pointer (
       touch, PointerTypes.TOUCH, touch.identifier,
-      touch.clientX, touch.clientY
+      touch.clientX, touch.clientY,
+      evt
     );
     pointers.push (pointer);
   }
@@ -112,7 +117,8 @@ function buildTouchList (evt, target_id)
     if (target_id && pointerEvents [touch.identifier] != target_id) continue;
     var pointer = new Pointer (
       touch, PointerTypes.TOUCH, touch.identifier,
-      touch.clientX, touch.clientY
+      touch.clientX, touch.clientY,
+      evt
     );
     pointers.push (pointer);
   }
@@ -123,7 +129,8 @@ function buildTouchList (evt, target_id)
     var touch = evt.changedTouches[i];
     var pointer = new Pointer (
       touch, PointerTypes.TOUCH, touch.identifier,
-      evt.clientX, evt.clientY
+      evt.clientX, evt.clientY,
+      evt
     );
     pointers.push (pointer);
   }
