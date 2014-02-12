@@ -9,17 +9,17 @@ function handleEvent (e)
   
   switch (e.type)
   {
-    case vs.POINTER_START:
-      this.pointerStart (e);
-      break;
+    // case vs.POINTER_START:
+    //   this.pointerStart (e);
+    //   break;
 
-    case vs.POINTER_MOVE:
-      this.pointerMove (e);
-      break;
+    // case vs.POINTER_MOVE:
+    //   this.pointerMove (e);
+    //   break;
 
-    case vs.POINTER_END:
-      this.pointerEnd (e);
-      break;
+    // case vs.POINTER_END:
+    //   this.pointerEnd (e);
+    //   break;
 
     case vs.GESTURE_START:
       this.gestureStart (e);
