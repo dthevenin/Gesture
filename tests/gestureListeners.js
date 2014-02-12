@@ -43,12 +43,12 @@ function gestureStart (e)
   vs.addPointerListener (document, vs.GESTURE_END, this);
   this.vsSetNewTransformOrigin (e.centroid);
 
-  update_debug (e.targetPointerList, e.changedPointerList, false, e.rotation);
+  //update_debug (e.targetPointerList, e.changedPointerList, false, e.rotation);
 };
 
 function gestureChange (e)
 {
-  update_debug (e.targetPointerList, e.changedPointerList, false, e.rotation);
+  //update_debug (e.targetPointerList, e.changedPointerList, false, e.rotation);
   
   this.vsScale (e.scale);
   this.vsRotate (e.rotation);
@@ -57,7 +57,8 @@ function gestureChange (e)
 
 function gestureEnd (e)
 {
-  update_debug (null, null, true);
+  //update_debug (null, null, true);
+  vs.removePointerListener (document, vs.GESTURE_END, this);
   vs.removePointerListener (document, vs.GESTURE_CHANGE, this);
 };
   
