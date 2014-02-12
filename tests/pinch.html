@@ -59,13 +59,9 @@
       {
         var node = document.getElementById ('node1');
         node.handleEvent = handleEvent;
-        node.pointerStart = pointerStart;
-        node.pointerMove = pointerMove;
-        node.pointerEnd = pointerEnd;
         node.gestureStart = gestureStart;
         node.gestureChange = gestureChange;
         node.gestureEnd = gestureEnd;
-        vs.addPointerListener (node, vs.POINTER_START, node);
         vs.addPointerListener (node, vs.GESTURE_START, node);
       }
     </script>
