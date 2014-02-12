@@ -40,10 +40,21 @@ var POINTER_START, POINTER_MOVE, POINTER_END, POINTER_CANCEL;
 
 if (EVENT_SUPPORT_TOUCH)
 {
-  POINTER_START = hasPointer ?  'pointerdown' : hasMSPointer ? 'MSPointerDown' : 'touchstart';
-  POINTER_MOVE = hasPointer ?  'pointermove' : hasMSPointer ? 'MSPointerMove' : 'touchmove';
-  POINTER_END = hasPointer ?  'pointerup' : hasMSPointer ? 'MSPointerUp' : 'touchend';
-  POINTER_CANCEL = hasPointer ?  'pointercancel' : hasMSPointer ? 'MSPointerCancel' : 'touchcancel';
+  POINTER_START =
+    hasPointer ?  'pointerdown' :
+    hasMSPointer ? 'MSPointerDown' : 'touchstart';
+
+  POINTER_MOVE =
+    hasPointer ?  'pointermove' :
+    hasMSPointer ? 'MSPointerMove' : 'touchmove';
+
+  POINTER_END =
+    hasPointer ?  'pointerup' :
+    hasMSPointer ? 'MSPointerUp' : 'touchend';
+
+  POINTER_CANCEL =
+    hasPointer ?  'pointercancel' :
+    hasMSPointer ? 'MSPointerCancel' : 'touchcancel';
 }
 else
 {
@@ -66,7 +77,8 @@ function Pointer (event, type, identifier, clientX, clientY, event_bis)
   this.identifier = identifier;
 }
 
-Pointer.prototype.configureWithEvent = function (evt, clientX, clientY, event_bis)
+Pointer.prototype.configureWithEvent =
+  function (evt, clientX, clientY, event_bis)
 {
   this.pageX = evt.pageX;
   this.pageY = evt.pageY;
@@ -179,11 +191,14 @@ function buildMSPointerList (evt, remove, target_id)
       pointer = removed_pointers [id];
       if (!pointer)
       {
-        pointer = new Pointer (evt, evt.pointerType, id, evt.layerX, evt.layerY);
+        pointer = new Pointer
+          (evt, evt.pointerType, id, evt.layerX, evt.layerY);
         removed_pointers [id] = pointer;
       }
     }
-    for (id in removed_pointers) { removePointers.push (removed_pointers [id]); }
+    for (id in removed_pointers) {
+      removePointers.push (removed_pointers [id]);
+    }
     removed_pointers = {};
   }
   else
@@ -204,7 +219,7 @@ function buildMSPointerList (evt, remove, target_id)
   for (id in all_pointers)
   {
     var pointer = all_pointers [id];
-//    if (target_id && pointerEvents [pointer.identifier] != target_id) continue;
+//  if (target_id && pointerEvents [pointer.identifier] != target_id) continue;
     pointers.push (pointer);
   }
   evt.targetPointerList = pointers;
@@ -285,8 +300,14 @@ var msRemovePointer = function (evt) {
 
   if (nbPointerListener === 0)
   {
-    document.removeEventListener (hasPointer ? 'pointerup' : 'MSPointerUp', msRemovePointer);
-    document.removeEventListener (hasPointer ? 'pointercancel' : 'MSPointerCancel', msRemovePointer);
+    document.removeEventListener (
+      hasPointer ? 'pointerup' : 'MSPointerUp',
+      msRemovePointer
+    );
+    document.removeEventListener (
+      hasPointer ? 'pointercancel' : 'MSPointerCancel',
+      msRemovePointer
+    );
   }
 }
 
@@ -298,8 +319,14 @@ function msPointerDownHandler (event, listener, target_id)
 
   if (nbPointerListener === 0)
   {
-    document.addEventListener (hasPointer ? 'pointerup' : 'MSPointerUp', msRemovePointer);
-    document.addEventListener (hasPointer ? 'pointercancel' : 'MSPointerCancel', msRemovePointer);
+    document.addEventListener (
+      hasPointer ? 'pointerup' : 'MSPointerUp',
+      msRemovePointer
+    );
+    document.addEventListener (
+      hasPointer ? 'pointercancel' : 'MSPointerCancel',
+      msRemovePointer
+    );
   }
   nbPointerListener ++;
 }
@@ -324,7 +351,9 @@ function msPointerCancelHandler (event, listener)
 
 /*************************************************************/
 
-var pointerStartHandler, pointerMoveHandler, pointerEndHandler, pointerCancelHandler;
+var
+  pointerStartHandler, pointerMoveHandler,
+  pointerEndHandler, pointerCancelHandler;
 
 if (EVENT_SUPPORT_TOUCH)
 {
@@ -357,7 +386,9 @@ function getBindingIndex (target, type, listener)
   for (var i = 0; i < listener.__event_listeners.length; i++)
   {
     var binding = listener.__event_listeners [i];
-    if (binding.target === target && binding.type === type && binding.listener === listener)
+    if (binding.target === target &&
+        binding.type === type &&
+        binding.listener === listener)
       return i;
   }
   return -1;
@@ -369,23 +400,31 @@ function managePointerListenerAdd (node, type, func, binding)
   switch (type)
   {
     case POINTER_START:
-      binding.handler = function (e) {pointerStartHandler (e, func, target_id);};
+      binding.handler = function (e) {
+        pointerStartHandler (e, func, target_id);
+      };
       return true;
     break;
 
     case POINTER_MOVE:
     
-      binding.handler = function (e) {pointerMoveHandler (e, func, target_id);};
+      binding.handler = function (e) {
+        pointerMoveHandler (e, func, target_id);
+      };
       return true;
     break;
 
     case POINTER_END:
-      binding.handler = function (e) {pointerEndHandler (e, func);};
+      binding.handler = function (e) {
+        pointerEndHandler (e, func);
+      };
       return true;
     break;
 
     case POINTER_CANCEL:
-      binding.handler = function (e) {pointerCancelHandler (e, func);};
+      binding.handler = function (e) {
+        pointerCancelHandler (e, func);
+      };
       return true;
     break;
   }
