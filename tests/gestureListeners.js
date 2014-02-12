@@ -4,23 +4,8 @@
  */
 function handleEvent (e)
 {
-  e.stopPropagation ();
-  e.preventDefault ();
-  
   switch (e.type)
   {
-    // case vs.POINTER_START:
-    //   this.pointerStart (e);
-    //   break;
-
-    // case vs.POINTER_MOVE:
-    //   this.pointerMove (e);
-    //   break;
-
-    // case vs.POINTER_END:
-    //   this.pointerEnd (e);
-    //   break;
-
     case vs.GESTURE_START:
       this.gestureStart (e);
       break;
@@ -35,7 +20,6 @@ function handleEvent (e)
    }
   return false;
 };
-
 
 function gestureStart (e)
 {
