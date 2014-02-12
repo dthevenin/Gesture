@@ -253,8 +253,8 @@ function touchMoveHandler (event, listener, target_id)
 
 function touchEndHandler (event, listener)
 {
-  var pointer, l = event.changedTouches.length;
-  for (var i = 0; i < l; i++)
+  var pointer, l = event.changedTouches.length, i = 0;
+  for (; i < l; i++)
   {
     pointer = event.changedTouches [i];
     pointerEvents [pointer.identifier] = undefined;
