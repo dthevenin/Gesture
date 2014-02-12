@@ -169,8 +169,8 @@ function buildMouseList (evt, remove)
   }
 }
 
-var all_pointers = {};
-var removed_pointers = {};
+var all_pointers = [];
+var removed_pointers = [];
 
 function buildMSPointerList (evt, remove, target_id)
 {
