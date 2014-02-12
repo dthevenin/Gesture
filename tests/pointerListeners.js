@@ -55,6 +55,8 @@ function pointerMove (e)
 
 function pointerEnd (e)
 {
+  if (e.targetPointerList.length !== 0) return;
+  
   if (this._binding_)
   {
     vs.removePointerListener (document, vs.POINTER_MOVE, this);
