@@ -61,6 +61,8 @@ support.msGestures = false;
  */
 function getDistance (pointer1, pointer2)
 {
+  if (!pointer1 || !pointer2) return 0;
+  
   var x = pointer2.pageX - pointer1.pageX, y = pointer2.pageY - pointer1.pageY;
   return Math.sqrt ((x * x) + (y * y));
 };
@@ -72,6 +74,8 @@ function getDistance (pointer1, pointer2)
  */
 function getAngle (pointer1, pointer2 )
 {
+  if (!pointer1 || !pointer2) return 0;
+
   return Math.atan2 (pointer2.pageY - pointer1.pageY, pointer2.pageX - pointer1.pageX) * 180 / Math.PI;
 };
 
@@ -122,6 +126,8 @@ var _gesture_follow = false;
 var gestureStartListener = function (event, listener)
 {
   if (event.targetPointerList.length < 2) return;
+  event.preventDefault ();
+
   if (!_gesture_follow)
   {
     __init_distance =
@@ -149,14 +155,31 @@ var gestureStartListener = function (event, listener)
 
 var gestureChangeListener = function (event)
 {
+  event.preventDefault ();
+
   pointerMoveHandler (event, function (event)
   {
-    createCustomEvent (GESTURE_CHANGE, event.target, buildPaylaod (event));
+    // bug with Android stock browser which does not generate POINTER_END event
+    // when a finger is removed and an other finger is still touching the screen.
+    // Then during the POINTER_MOVE event, test if a gesture is still possible,
+    // otherwise remove bindings.
+    if (event.targetPointerList.length < 2) {
+      document.removeEventListener (vs.POINTER_MOVE, gestureChangeListener);
+      document.removeEventListener (vs.POINTER_END, gestureEndListener);
+      document.removeEventListener (vs.POINTER_CANCEL, gestureEndListener);
+      _gesture_follow = false;
+      createCustomEvent (GESTURE_END, event.target, buildPaylaod (event, true));    
+    }
+    else {
+      createCustomEvent (GESTURE_CHANGE, event.target, buildPaylaod (event));
+    }
   });
 };
 
 var gestureEndListener = function (event)
 {
+  event.preventDefault ();
+
   pointerEndHandler (event, function (event)
   {
     if (event.targetPointerList.length < 2)
