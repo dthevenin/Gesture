@@ -224,7 +224,7 @@ function buildMSPointerList (evt, remove, target_id)
     if (!pointer) return;
     
     pointers.push (pointer);
-//  if (target_id && pointerEvents [pointer.identifier] != target_id) return;
+    if (target_id && pointerEvents [pointer.identifier] != target_id) return;
     targetPointers.push (pointer);
   });
 
@@ -402,9 +402,18 @@ function getBindingIndex (target, type, listener)
   return -1;
 }
 
+function createUniqueId ()
+{
+  return "" + new Date().getTime() + "" + Math.floor (Math.random() * 1000000);
+}
+
 function managePointerListenerAdd (node, type, func, binding)
 {
   var target_id = (binding.listener)?binding.listener.id:undefined;
+  if (!target_id) {
+    target_id = createUniqueId ();
+    if (binding.listener) binding.listener.id = target_id;
+  }
   switch (type)
   {
     case POINTER_START:
