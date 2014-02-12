@@ -175,8 +175,11 @@ var removed_pointers = [];
 function buildMSPointerList (evt, remove, target_id)
 {
   // Note: "this" is the element.
-  var pointers = [];
-  var removePointers = [];
+  var
+    pointers = [],
+    targetPointers = [],
+    removePointers = [];
+    
   var id = evt.pointerId, pointer = all_pointers [id];
 
   if (remove)
@@ -184,7 +187,7 @@ function buildMSPointerList (evt, remove, target_id)
     if (pointer)
     {
       removed_pointers [id] = pointer;
-      delete (all_pointers [id]);
+      all_pointers [id] = undefined;
     }
     else
     {
@@ -196,10 +199,14 @@ function buildMSPointerList (evt, remove, target_id)
         removed_pointers [id] = pointer;
       }
     }
-    for (id in removed_pointers) {
-      removePointers.push (removed_pointers [id]);
-    }
-    removed_pointers = {};
+    
+    removed_pointers.forEach (function (pointer) {
+      if (!pointer) return;
+
+      removePointers.push (pointer);
+    });
+
+    removed_pointers = [];
   }
   else
   {
@@ -212,17 +219,18 @@ function buildMSPointerList (evt, remove, target_id)
       all_pointers [id] = pointer;
     }
   }
-  for (id in all_pointers) { pointers.push (all_pointers [id]); }
+
+  all_pointers.forEach (function (pointer) {
+    if (!pointer) return;
+    
+    pointers.push (pointer);
+//  if (target_id && pointerEvents [pointer.identifier] != target_id) return;
+    targetPointers.push (pointer);
+  });
+
   evt.nbPointers = pointers.length;
   evt.pointerList = pointers;
-  pointers = [];
-  for (id in all_pointers)
-  {
-    var pointer = all_pointers [id];
-//  if (target_id && pointerEvents [pointer.identifier] != target_id) continue;
-    pointers.push (pointer);
-  }
-  evt.targetPointerList = pointers;
+  evt.targetPointerList = targetPointers;
   evt.changedPointerList = removePointers;
 }
 
@@ -294,7 +302,7 @@ var msRemovePointer = function (evt) {
   if (pointer)
   {
     removed_pointers [pointer.identifier] = pointer;
-    delete (all_pointers [pointer.identifier]);
+    all_pointers [pointer.identifier] = undefined;
   }
   nbPointerListener --;
 
