@@ -4,23 +4,8 @@
  */
 function handleEvent (e)
 {
-  e.stopPropagation ();
-  e.preventDefault ();
-  
   switch (e.type)
   {
-    case vs.POINTER_START:
-      this.pointerStart (e);
-      break;
-
-    case vs.POINTER_MOVE:
-      this.pointerMove (e);
-      break;
-
-    case vs.POINTER_END:
-      this.pointerEnd (e);
-      break;
-
     case vs.GESTURE_START:
       this.gestureStart (e);
       break;
@@ -36,19 +21,18 @@ function handleEvent (e)
   return false;
 };
 
-
 function gestureStart (e)
 {
   vs.addPointerListener (document, vs.GESTURE_CHANGE, this);
   vs.addPointerListener (document, vs.GESTURE_END, this);
   this.vsSetNewTransformOrigin (e.centroid);
 
-  update_debug (e.targetPointerList, e.changedPointerList, false, e.rotation);
+  //update_debug (e.targetPointerList, e.changedPointerList, false, e.rotation);
 };
 
 function gestureChange (e)
 {
-  update_debug (e.targetPointerList, e.changedPointerList, false, e.rotation);
+  //update_debug (e.targetPointerList, e.changedPointerList, false, e.rotation);
   
   this.vsScale (e.scale);
   this.vsRotate (e.rotation);
@@ -57,7 +41,8 @@ function gestureChange (e)
 
 function gestureEnd (e)
 {
-  update_debug (null, null, true);
+  //update_debug (null, null, true);
+  vs.removePointerListener (document, vs.GESTURE_END, this);
   vs.removePointerListener (document, vs.GESTURE_CHANGE, this);
 };
   
