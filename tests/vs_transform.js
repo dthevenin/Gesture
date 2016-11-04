@@ -80,7 +80,6 @@ function setNewTransformOrigin (origin)
   if (!this._vs_transform) this._vs_transform = matrix;
   {
     this._vs_transform = matrix.multiply (this._vs_transform);
-    delete (matrix);
   }
   
   // Init a new transform space
@@ -155,7 +154,6 @@ function applyTransformation (node)
   var matrix = node.vsGetCTM ();
   
   util.setElementTransform (node, matrix.toString ());
-  delete (matrix);
 };
 
 util.extend (HTMLElement.prototype, {
