@@ -21,8 +21,8 @@ var ui_event = {}
 var pointer = require("./src/PointerEvent")
 var gesture = require("./src/GestureEvent")
 
-for (key in pointer) ui_event[key] = pointer[key]
-for (key in gesture) ui_event[key] = gesture[key]
+for (let key in pointer) ui_event[key] = pointer[key]
+for (let key in gesture) ui_event[key] = gesture[key]
 
 
 module.exports = ui_event
