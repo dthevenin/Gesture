@@ -1,0 +1,9 @@
+{
+  "name": "vs_gesture",
+  "version": "1.0.0",
+  "description": "Gesture.js uniformizes pointer and gesture inputs across mobile and desktop browsers.",
+  "main": "index.js",
+  "repository": "git@github.com:dthevenin/Gesture.git",
+  "author": "<david.thevenin@gmail.com>",
+  "license": "MIT"
+}
