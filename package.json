@@ -1,6 +1,6 @@
 {
   "name": "vs_gesture",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gesture.js uniformizes pointer and gesture inputs across mobile and desktop browsers.",
   "main": "./lib/vs_gesture.js",
   "module": "es/vs_gesture.js",
@@ -28,10 +28,9 @@
     }
   },
   "files": [
-    "dist",
-    "lib",
-    "src",
-    "es"
+    "dist/",
+    "lib/",
+    "es/"
   ],
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -42,6 +41,7 @@
     "uglify-es": "^3.3.2"
   },
   "dependencies": {
+    "vs_transform": "https://github.com/dthevenin/Transform.git",
     "vs_utils": "https://github.com/dthevenin/Util.git"
   }
 }

@@ -26,7 +26,7 @@ function update_debug (pointers, pointersToRemove, clear, angle)
       this._debugs [pointer.identifier] = div;
       document.body.appendChild (div, this.view);
     }
-    vs.util.setElementPos (div, pointer.pageX - 15, pointer.pageY - 15);
+    vs_utils.setElementPos (div, pointer.pageX - 15, pointer.pageY - 15);
     _pointers_ [pointer.identifier] = true;
    
     x += pointer.pageX;
@@ -41,8 +41,8 @@ function update_debug (pointers, pointersToRemove, clear, angle)
     this._debugs ['centroid'] = centroid;
     document.body.appendChild (centroid, this.view);
   }
-  vs.util.setElementPos (centroid, x / nb_pointer - 10, y / nb_pointer - 10);
-  if (vs.util.isNumber (angle)) centroid.innerHTML = Math.floor (angle);
+  vs_utils.setElementPos (centroid, x / nb_pointer - 10, y / nb_pointer - 10);
+  if (vs_utils.isNumber (angle)) centroid.innerHTML = Math.floor (angle);
   else centroid.innerHTML = "";
   
   // remove old pointers trace

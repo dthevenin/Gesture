@@ -5,15 +5,15 @@ function handleEvent (e)
   
   switch (e.type)
   {
-    case vs.POINTER_START:
+    case vs_gesture.POINTER_START:
       this.pointerStart (e);
       break;
 
-    case vs.POINTER_MOVE:
+    case vs_gesture.POINTER_MOVE:
       this.pointerMove (e);
       break;
 
-    case vs.POINTER_END:
+    case vs_gesture.POINTER_END:
       this.pointerEnd (e);
       break;
    }
@@ -24,8 +24,8 @@ function pointerStart (e)
 {
   if (e.targetPointerList.length === 1 && !this._binding_)
   {
-    vs.addPointerListener (document, vs.POINTER_MOVE, this);
-    vs.addPointerListener (document, vs.POINTER_END, this);
+    vs_gesture.addPointerListener (document, vs_gesture.POINTER_MOVE, this);
+    vs_gesture.addPointerListener (document, vs_gesture.POINTER_END, this);
     this._binding_ = true;
     var pointer = e.targetPointerList [0];
     
@@ -34,8 +34,8 @@ function pointerStart (e)
   }
   else if (this._binding)
   {
-    vs.removePointerListener (document, vs.POINTER_MOVE, this);
-    vs.removePointerListener (document, vs.POINTER_END, this);
+    vs_gesture.removePointerListener (document, vs_gesture.POINTER_MOVE, this);
+    vs_gesture.removePointerListener (document, vs_gesture.POINTER_END, this);
     this._binding_ = false;
   }
 };
@@ -59,8 +59,8 @@ function pointerEnd (e)
   
   if (this._binding_)
   {
-    vs.removePointerListener (document, vs.POINTER_MOVE, this);
-    vs.removePointerListener (document, vs.POINTER_END, this);
+    vs_gesture.removePointerListener (document, vs_gesture.POINTER_MOVE, this);
+    vs_gesture.removePointerListener (document, vs_gesture.POINTER_END, this);
     this._binding_ = false;
   }
   update_debug (null, null, true);

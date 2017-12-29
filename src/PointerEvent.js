@@ -17,6 +17,7 @@
 */
 
 import { isFunction } from 'vs_utils';
+import { manageGestureListenerRemove, manageGestureListenerAdd } from './GestureEvent';
 
 /* touch event messages */
 var EVENT_SUPPORT_TOUCH = false;
@@ -552,6 +553,10 @@ function createCustomEvent (eventName, target, payload)
                       Export
 *********************************************************************/
 export {
+  pointerStartHandler,
+  pointerMoveHandler,
+  pointerEndHandler,
+  pointerCancelHandler,
   createCustomEvent,
   removePointerListener,
   addPointerListener,

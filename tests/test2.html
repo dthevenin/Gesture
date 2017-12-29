@@ -59,10 +59,9 @@
     }
     </style>
 
-    <script type="text/javascript" src="../build/firminCSSMatrix.js"></script>
-    <script type="text/javascript" src="../build/vs_util.js"></script>
-    <script type="text/javascript" src="vs_transform_min.js"></script>
-    <script type="text/javascript" src="../build/vs_gesture.js"></script>
+    <script type="text/javascript" src="../node_modules/vs_utils/dist/vs_utils.js"></script>
+    <script type="text/javascript" src="../node_modules/vs_transform/dist/vs_transform.js"></script>
+    <script type="text/javascript" src="../dist/vs_gesture.js"></script>
     <script type="text/javascript" src="debug.js"></script>
     <script type="text/javascript" src="pointerListeners.js"></script>
     
@@ -73,7 +72,7 @@
         node.pointerStart = pointerStart;
         node.pointerMove = pointerMove;
         node.pointerEnd = pointerEnd;
-        vs.addPointerListener (node, vs.POINTER_START, node);
+        vs_gesture.addPointerListener (node, vs_gesture.POINTER_START, node);
       }
     
       function test ()

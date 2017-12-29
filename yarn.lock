@@ -844,9 +844,15 @@ uglify-es@^3.3.2:
     commander "~2.12.1"
     source-map "~0.6.1"
 
+"vs_transform@https://github.com/dthevenin/Transform.git":
+  version "1.0.1"
+  resolved "https://github.com/dthevenin/Transform.git#4bdea66575749d691e5635f51ceb15f4918014ef"
+  dependencies:
+    vs_utils "https://github.com/dthevenin/Util.git"
+
 "vs_utils@https://github.com/dthevenin/Util.git":
   version "1.0.0"
-  resolved "https://github.com/dthevenin/Util.git#5fe141c6616acac3cd1220e2378be316300c47ab"
+  resolved "https://github.com/dthevenin/Util.git#eae4da0ead58118d1444e8fc8ec6a7f108e65300"
 
 wrappy@1:
   version "1.0.2"

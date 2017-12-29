@@ -17,7 +17,10 @@
 */
 
 import { getElementAbsolutePosition, vsTestElem } from 'vs_utils';
-import { POINTER_START, POINTER_MOVE, POINTER_END, POINTER_CANCEL } from './PointerEvent';
+import {
+  POINTER_START, POINTER_MOVE, POINTER_END, POINTER_CANCEL,
+  pointerStartHandler, pointerMoveHandler, pointerEndHandler, pointerCancelHandler
+ } from './PointerEvent';
 
 let GESTURE_START, GESTURE_CHANGE, GESTURE_END;
 
@@ -339,6 +342,9 @@ const manageGestureListenerRemove =
   
 
 export {
+  manageGestureListenerRemove,
+  manageGestureListenerAdd,
+
   /** 
    * Start gesture event
    * @name vs.GESTURE_START
