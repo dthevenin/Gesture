@@ -16,11 +16,14 @@
   along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-var GESTURE_START, GESTURE_CHANGE, GESTURE_END;
+import { getElementAbsolutePosition, vsTestElem } from 'vs_utils';
+import { POINTER_START, POINTER_MOVE, POINTER_END, POINTER_CANCEL } from './PointerEvent';
 
-var support = {};
+let GESTURE_START, GESTURE_CHANGE, GESTURE_END;
 
-var events = [
+const support = {};
+
+const events = [
   'gesturestart',
   'gesturechange',
   'gestureend'
@@ -32,11 +35,11 @@ for (var i = 0; i < events.length; i++)
 {
   var eventName = events[i];
   eventName = 'on' + eventName;
-  var isSupported = (eventName in util.vsTestElem);
+  var isSupported = (eventName in vsTestElem);
   if (!isSupported)
   {
-    util.vsTestElem.setAttribute(eventName, 'return;');
-    isSupported = typeof util.vsTestElem[eventName] == 'function';
+    vsTestElem.setAttribute(eventName, 'return;');
+    isSupported = typeof vsTestElem[eventName] == 'function';
   }
   support [events[i]] = isSupported;
 }
@@ -136,14 +139,14 @@ var gestureStartListener = function (event, listener)
       getAngle (event.targetPointerList [0], event.targetPointerList [1]);
     
     var comp = event.targetPointerList[0].target._comp_;
-    __init_pos = util.getElementAbsolutePosition (event.targetPointerList[0].target, true);
+    __init_pos = getElementAbsolutePosition (event.targetPointerList[0].target, true);
 //    init_pos = init_pos.matrixTransform (comp.getParentCTM ());
     
     __init_centroid = getCentroid (event.targetPointerList);
        
-    document.addEventListener (vs.POINTER_MOVE, gestureChangeListener);
-    document.addEventListener (vs.POINTER_END, gestureEndListener);
-    document.addEventListener (vs.POINTER_CANCEL, gestureEndListener);
+    document.addEventListener (POINTER_MOVE, gestureChangeListener);
+    document.addEventListener (POINTER_END, gestureEndListener);
+    document.addEventListener (POINTER_CANCEL, gestureEndListener);
     createCustomEvent (GESTURE_START, event.target, buildPaylaod (event));
     _gesture_follow = true;
   }
@@ -164,9 +167,9 @@ var gestureChangeListener = function (event)
     // Then during the POINTER_MOVE event, test if a gesture is still possible,
     // otherwise remove bindings.
     if (event.targetPointerList.length < 2) {
-      document.removeEventListener (vs.POINTER_MOVE, gestureChangeListener);
-      document.removeEventListener (vs.POINTER_END, gestureEndListener);
-      document.removeEventListener (vs.POINTER_CANCEL, gestureEndListener);
+      document.removeEventListener (POINTER_MOVE, gestureChangeListener);
+      document.removeEventListener (POINTER_END, gestureEndListener);
+      document.removeEventListener (POINTER_CANCEL, gestureEndListener);
       _gesture_follow = false;
       createCustomEvent (GESTURE_END, event.target, buildPaylaod (event, true));    
     }
@@ -184,9 +187,9 @@ var gestureEndListener = function (event)
   {
     if (event.targetPointerList.length < 2)
     {
-      document.removeEventListener (vs.POINTER_MOVE, gestureChangeListener);
-      document.removeEventListener (vs.POINTER_END, gestureEndListener);
-      document.removeEventListener (vs.POINTER_CANCEL, gestureEndListener);
+      document.removeEventListener (POINTER_MOVE, gestureChangeListener);
+      document.removeEventListener (POINTER_END, gestureEndListener);
+      document.removeEventListener (POINTER_CANCEL, gestureEndListener);
       _gesture_follow = false;
       createCustomEvent (GESTURE_END, event.target, buildPaylaod (event, true));
     }
@@ -254,7 +257,7 @@ function touchToGestureListenerAdd (node, type, func, binding)
     case GESTURE_START:
       binding.gesture_handler =
         function (e) {pointerStartHandler (e, gestureStartListener, target_id)};
-      node.addEventListener (vs.POINTER_START, binding.gesture_handler);
+      node.addEventListener (POINTER_START, binding.gesture_handler);
       binding.handler = func;
 
       return true;
@@ -294,7 +297,7 @@ function gestureEventListenerAdd (node, type, func, binding)
   return false;
 }
 
-var manageGestureListenerAdd =
+const manageGestureListenerAdd =
   (support.gestures || support.msGestures)?gestureEventListenerAdd:touchToGestureListenerAdd;
 
 function touchToGestureListenerRemove (node, type, binding)
@@ -303,7 +306,7 @@ function touchToGestureListenerRemove (node, type, binding)
   switch (type)
   {
     case GESTURE_START:
-      node.removeEventListener (vs.POINTER_START, binding.gesture_handler, target_id);
+      node.removeEventListener (POINTER_START, binding.gesture_handler, target_id);
 
       return true;
     break;
@@ -331,30 +334,34 @@ function gestureListenerRemove (node, type, binding)
   return false;
 }
 
-var manageGestureListenerRemove =
+const manageGestureListenerRemove =
   (support.gestures || support.msGestures)?gestureListenerRemove:touchToGestureListenerRemove;
   
-/** 
- * Start gesture event
- * @name vs.GESTURE_START
- * @type {String}
- * @const
- */ 
-vs.GESTURE_START = GESTURE_START;
 
-/** 
- * Move gesture event
- * @name vs.GESTURE_CHANGE 
- * @type {String}
- * @const
- */ 
-vs.GESTURE_CHANGE = GESTURE_CHANGE;
+export {
+  /** 
+   * Start gesture event
+   * @name vs.GESTURE_START
+   * @type {String}
+   * @const
+   */
+  GESTURE_START,
 
-/** 
- * End gesture event
- * @name vs.GESTURE_END 
- * @type {String}
- * @const
- */ 
-vs.GESTURE_END = GESTURE_END;
+  /** 
+   * Move gesture event
+   * @name vs.GESTURE_CHANGE 
+   * @type {String}
+   * @const
+   */
+  GESTURE_CHANGE,
+
+  /** 
+   * End gesture event
+   * @name vs.GESTURE_END 
+   * @type {String}
+   * @const
+   */
+  GESTURE_END
+}
+
 

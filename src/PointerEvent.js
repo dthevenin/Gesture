@@ -16,6 +16,8 @@
   along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+import { isFunction } from 'vs_utils';
+
 /* touch event messages */
 var EVENT_SUPPORT_TOUCH = false;
 var EVENT_SUPPORT_GESTURE = false;
@@ -72,26 +74,27 @@ else
 // positive integers.
 var MOUSE_ID = 31337;
 
-function Pointer (event, type, identifier, clientX, clientY, event_bis)
-{
-  this.configureWithEvent (event, clientX, clientY, event_bis)
-  this.type = type;
-  this.identifier = identifier;
-}
+class Pointer {
+  constructor(event, type, identifier, clientX, clientY, event_bis)
+  {
+    this.configureWithEvent (event, clientX, clientY, event_bis)
+    this.type = type;
+    this.identifier = identifier;
+  }
 
-Pointer.prototype.configureWithEvent =
-  function (evt, clientX, clientY, event_bis)
-{
-  this.pageX = evt.pageX;
-  this.pageY = evt.pageY;
-  if (typeof clientX !== "undefiend") this.clientX = clientX;
-  if (typeof clientY !== "undefiend") this.clientY = clientY;
-  
-  if (evt.target) this.target = evt.target;
-  else if (event_bis) this.target = event_bis.target;
-  
-  if (evt.currentTarget) this.currentTarget = evt.currentTarget;
-  else if (event_bis) this.currentTarget = event_bis.currentTarget;
+  configureWithEvent (evt, clientX, clientY, event_bis)
+  {
+    this.pageX = evt.pageX;
+    this.pageY = evt.pageY;
+    if (typeof clientX !== "undefiend") this.clientX = clientX;
+    if (typeof clientY !== "undefiend") this.clientY = clientY;
+    
+    if (evt.target) this.target = evt.target;
+    else if (event_bis) this.target = event_bis.target;
+    
+    if (evt.currentTarget) this.currentTarget = evt.currentTarget;
+    else if (event_bis) this.currentTarget = event_bis.currentTarget;
+  }
 }
 
 var PointerTypes = {
@@ -476,10 +479,10 @@ function addPointerListener (node, type, listener, useCapture)
     return;
   }
   var func = listener;
-  if (!util.isFunction (listener))
+  if (!isFunction (listener))
   {
     func = listener.handleEvent;
-    if (util.isFunction (func)) func = func.bind (listener);
+    if (isFunction (func)) func = func.bind (listener);
   }
 
   if (getBindingIndex (node, type, listener) !== -1)
@@ -533,7 +536,6 @@ function removePointerListener (node, type, listener, useCapture)
   }
 
   node.removeEventListener (type, binding.handler, useCapture);
-  delete (binding);
 }
 
 function createCustomEvent (eventName, target, payload)
@@ -549,39 +551,43 @@ function createCustomEvent (eventName, target, payload)
 /********************************************************************
                       Export
 *********************************************************************/
-vs.createCustomEvent = createCustomEvent;
-vs.removePointerListener = removePointerListener;
-vs.addPointerListener = addPointerListener;
-vs.PointerTypes = PointerTypes;
+export {
+  createCustomEvent,
+  removePointerListener,
+  addPointerListener,
+  PointerTypes,
+  Pointer,
 
-/** 
- * Start pointer event (mousedown, touchstart, )
- * @name vs.POINTER_START
- * @type {String}
- * @const
- */ 
-vs.POINTER_START = POINTER_START;
+  /** 
+   * Start pointer event (mousedown, touchstart, )
+   * @name vs.POINTER_START
+   * @type {String}
+   * @const
+   */
+  POINTER_START,
 
-/** 
- * Move pointer event (mousemove, touchmove, )
- * @name vs.POINTER_MOVE 
- * @type {String}
- * @const
- */ 
-vs.POINTER_MOVE = POINTER_MOVE;
+  /** 
+   * Move pointer event (mousemove, touchmove, )
+   * @name vs.POINTER_MOVE 
+   * @type {String}
+   * @const
+   */
+  POINTER_MOVE,
 
-/** 
- * End pointer event (mouseup, touchend, )
- * @name vs.POINTER_END 
- * @type {String}
- * @const
- */ 
-vs.POINTER_END = POINTER_END;
+  /** 
+   * End pointer event (mouseup, touchend, )
+   * @name vs.POINTER_END 
+   * @type {String}
+   * @const
+   */
+  POINTER_END,
 
-/** 
- * Cancel pointer event (mouseup, touchcancel, )
- * @name vs.POINTER_CANCEL 
- * @type {String}
- * @const
- */ 
-vs.POINTER_CANCEL = POINTER_CANCEL;
+  /** 
+   * Cancel pointer event (mouseup, touchcancel, )
+   * @name vs.POINTER_CANCEL 
+   * @type {String}
+   * @const
+   */
+  POINTER_CANCEL
+}
+
