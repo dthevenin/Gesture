@@ -1,16 +1,26 @@
-const env = process.env.NODE_ENV
-
-const config = {
-  entry: 'src/index.js',
+export default {
+  input: 'src/index.js',
   external: ['vs_utils'],
-  globals: {},
-  format: 'amd',
-  moduleName: 'VSGesture',
+  output: [
+    {
+      file: './dist/vs_gesture.js',
+      name: 'vs_gesture',
+      globals: {},
+      format: 'iife',
+    },
+    {
+      file: './es/vs_gesture.js',
+      name: 'vs_gesture',
+      globals: {},
+      format: 'es',
+    },
+    {
+      file: './lib/vs_gesture.js',
+      name: 'vs_gesture',
+      globals: {},
+      format: 'amd'
+    }
+  ],
   plugins: [
   ]
-}
-
-if (env === 'production') {
-}
-
-export default config
+};
