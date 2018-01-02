@@ -10,9 +10,9 @@
   "license": "MIT",
   "scripts": {
     "build:all": "rollup -c rollup.config.js",
-    "build:amd:min": "uglifyjs --compress --mangle -o lib/vs_gesture.min.js -- lib/vs_gesture.js",
-    "build:iief:min": "uglifyjs --compress --mangle -o dist/vs_gesture.min.js -- dist/vs_gesture.js",
-    "build:es:min": "uglifyjs --compress --mangle -o es/vs_gesture.min.js -- es/vs_gesture.js",
+    "build:amd:min": "node_modules/uglify-es/bin/uglifyjs --compress --mangle -o lib/vs_gesture.min.js -- lib/vs_gesture.js",
+    "build:iief:min": "node_modules/uglify-es/bin/uglifyjs --compress --mangle -o dist/vs_gesture.min.js -- dist/vs_gesture.js",
+    "build:es:min": "node_modules/uglify-es/bin/uglifyjs --compress --mangle -o es/vs_gesture.min.js -- es/vs_gesture.js",
     "build": "npm run build:all && npm run build:amd:min && npm run build:iief:min && npm run build:es:min",
     "clean": "rimraf lib es dist",
     "prepublish": "npm run clean && npm run build"
