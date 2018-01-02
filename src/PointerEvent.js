@@ -170,7 +170,7 @@ function buildMouseList (evt, remove)
   {
     evt.nbPointers = 0;
     evt.pointerList = [];
-    evt.targetPointerList = pointers;
+    evt.targetPointerList = [];
     evt.changedPointerList = pointers;
   }
 }
