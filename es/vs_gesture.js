@@ -512,7 +512,7 @@ function buildMouseList (evt, remove)
   {
     evt.nbPointers = 0;
     evt.pointerList = [];
-    evt.targetPointerList = pointers;
+    evt.targetPointerList = [];
     evt.changedPointerList = pointers;
   }
 }
@@ -882,7 +882,7 @@ function removePointerListener (node, type, listener, useCapture)
   node.removeEventListener (type, binding.handler, useCapture);
 }
 
-function createCustomEvent$1 (eventName, target, payload)
+function createCustomEvent (eventName, target, payload)
 {
   var event = document.createEvent ('Event');
   event.initEvent (eventName, true, true);
@@ -892,4 +892,4 @@ function createCustomEvent$1 (eventName, target, payload)
   target.dispatchEvent (event);
 }
 
-export { createCustomEvent$1 as createCustomEvent, removePointerListener, addPointerListener, PointerTypes$1 as PointerTypes, Pointer$1 as Pointer, POINTER_START, POINTER_MOVE, POINTER_END, POINTER_CANCEL, manageGestureListenerRemove, manageGestureListenerAdd, GESTURE_START, GESTURE_CHANGE, GESTURE_END };
+export { createCustomEvent, removePointerListener, addPointerListener, PointerTypes$1 as PointerTypes, Pointer$1 as Pointer, POINTER_START, POINTER_MOVE, POINTER_END, POINTER_CANCEL, manageGestureListenerRemove, manageGestureListenerAdd, GESTURE_START, GESTURE_CHANGE, GESTURE_END };

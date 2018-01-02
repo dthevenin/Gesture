@@ -19,6 +19,7 @@
 import { getElementAbsolutePosition, vsTestElem } from 'vs_utils';
 import {
   POINTER_START, POINTER_MOVE, POINTER_END, POINTER_CANCEL,
+  createCustomEvent,
   pointerStartHandler, pointerMoveHandler, pointerEndHandler, pointerCancelHandler
  } from './PointerEvent';
 
