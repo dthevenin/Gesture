@@ -1,6 +1,6 @@
 {
   "name": "vs_gesture",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Gesture.js uniformizes pointer and gesture inputs across mobile and desktop browsers.",
   "main": "./lib/vs_gesture.js",
   "module": "es/vs_gesture.js",
@@ -22,7 +22,7 @@
       "test": {
         "plugins": [],
         "presets": [
-          "es2015"
+          "@babel/preset-env"
         ]
       }
     }
@@ -33,15 +33,16 @@
     "es/"
   ],
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015": "^6.24.1",
-    "mocha": "^4.0.1",
-    "rollup": "^0.53.1",
-    "uglify-es": "^3.3.2"
+    "@babel/core": "^7.0.0-beta.54",
+    "@babel/preset-env": "^7.0.0-beta.54",
+    "@babel/register": "^7.0.0-beta.54",
+    "mocha": "^5.2.0",
+    "nyc": "^12.0.2",
+    "rollup": "^0.63.4",
+    "uglify-es": "^3.3.9"
   },
   "dependencies": {
-    "vs_transform": "https://github.com/dthevenin/Transform.git#v1.0.2",
-    "vs_utils": "https://github.com/dthevenin/Util.git#v1.0.3"
+    "vs_transform": "https://github.com/dthevenin/Transform.git#v1.0.3",
+    "vs_utils": "https://github.com/dthevenin/Util.git#v1.0.4"
   }
 }
