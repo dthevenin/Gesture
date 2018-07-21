@@ -20,7 +20,7 @@ import { getElementAbsolutePosition, vsTestElem } from 'vs_utils';
 import {
   POINTER_START, POINTER_MOVE, POINTER_END, POINTER_CANCEL,
   createCustomEvent,
-  pointerStartHandler, pointerMoveHandler, pointerEndHandler, pointerCancelHandler
+  pointerStartHandler, pointerMoveHandler, pointerEndHandler
  } from './PointerEvent';
 
 let GESTURE_START, GESTURE_CHANGE, GESTURE_END;
