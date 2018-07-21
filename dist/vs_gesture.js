@@ -891,4 +891,4 @@ var vs_gesture = (function (exports,vs_utils) {
 
   return exports;
 
-}({},null));
+}({},vs_utils));
