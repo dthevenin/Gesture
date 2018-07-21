@@ -1,4 +1,4 @@
-import { getElementAbsolutePosition, isFunction, vsTestElem } from 'vs_utils';
+import { getElementAbsolutePosition, vsTestElem, isFunction } from 'vs_utils';
 
 /**
   Copyright (C) 2009-2012. David Thevenin, ViniSketch SARL (c), and 
@@ -18,9 +18,7 @@ import { getElementAbsolutePosition, isFunction, vsTestElem } from 'vs_utils';
   along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-let GESTURE_START;
-let GESTURE_CHANGE;
-let GESTURE_END;
+let GESTURE_START, GESTURE_CHANGE, GESTURE_END;
 
 const support = {};
 
@@ -70,7 +68,6 @@ function getDistance (pointer1, pointer2)
   var x = pointer2.pageX - pointer1.pageX, y = pointer2.pageY - pointer1.pageY;
   return Math.sqrt ((x * x) + (y * y));
 }
-
 /**
  * calculate the angle between two points
  * @param   Pointer  pointer1 { x: int, y: int }
@@ -82,11 +79,7 @@ function getAngle (pointer1, pointer2 )
 
   return Math.atan2 (pointer2.pageY - pointer1.pageY, pointer2.pageX - pointer1.pageX) * 180 / Math.PI;
 }
-
-var __init_distance = 0;
-var __init_angle = 0;
-var __init_centroid;
-var __init_pos;
+var __init_distance = 0, __init_angle = 0, __init_centroid, __init_pos;
 
 function getCentroid (pointers)
 {
@@ -103,7 +96,6 @@ function getCentroid (pointers)
   
   return {x: x / nb_pointer - __init_pos.x, y: y / nb_pointer - __init_pos.y};
 }
-
 function getTranslate (pos1, pos2)
 {
   return [pos1.x - pos2.x, pos1.y - pos2.y];
@@ -380,10 +372,7 @@ else if (typeof document != "undefined" &&
 }
 
 
-var POINTER_START;
-var POINTER_MOVE;
-var POINTER_END;
-var POINTER_CANCEL;
+var POINTER_START, POINTER_MOVE, POINTER_END, POINTER_CANCEL;
 
 if (EVENT_SUPPORT_TOUCH)
 {
@@ -707,10 +696,9 @@ function msPointerCancelHandler (event, listener)
 
 /*************************************************************/
 
-var pointerStartHandler;
-var pointerMoveHandler;
-var pointerEndHandler;
-var pointerCancelHandler;
+var
+  pointerStartHandler, pointerMoveHandler,
+  pointerEndHandler, pointerCancelHandler;
 
 if (EVENT_SUPPORT_TOUCH)
 {
@@ -876,7 +864,7 @@ function removePointerListener (node, type, listener, useCapture)
   if (!managePointerListenerRemove (node, type, binding))
   {
     if (!manageGestureListenerRemove (node, type, binding))
-    {}
+    ;
   }
 
   node.removeEventListener (type, binding.handler, useCapture);
