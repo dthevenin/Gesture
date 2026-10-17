@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "moduleResolution": "bundler",
+    "allowJs": false,
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "incremental": true,
+  },
+  "include": ["./gesture"],
+  "exclude": ["node_modules"]
+}
