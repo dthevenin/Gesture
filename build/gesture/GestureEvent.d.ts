@@ -1,0 +1,1 @@
+//# sourceMappingURL=GestureEvent.d.ts.map
